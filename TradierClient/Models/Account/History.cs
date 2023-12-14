@@ -1,94 +1,94 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Models.Account
 {
 
     public class HistoryRootobject
     {
-        [JsonProperty("history")]
+        [JsonPropertyName("history")]
         public History History { get; set; }
     }
 
     public class History
     {
-        [JsonProperty("event")]
+        [JsonPropertyName("event")]
         public List<Event> Event { get; set; }
     }
 
     public class Event
     {
-        [JsonProperty("amount")]
+        [JsonPropertyName("amount")]
         public float Amount { get; set; }
 
-        [JsonProperty("date")]
+        [JsonPropertyName("date")]
         public DateTime Date { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        [JsonProperty("trade")]
+        [JsonPropertyName("trade")]
         public Trade Trade { get; set; }
 
-        [JsonProperty("adjustment")]
+        [JsonPropertyName("adjustment")]
         public Adjustment Adjustment { get; set; }
 
-        [JsonProperty("option")]
+        [JsonPropertyName("option")]
         public Option Option { get; set; }
 
-        [JsonProperty("journal")]
+        [JsonPropertyName("journal")]
         public Journal Journal { get; set; }
     }
 
     public class Trade
     {
-        [JsonProperty("commission")]
+        [JsonPropertyName("commission")]
         public float Commission { get; set; }
 
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [JsonProperty("price")]
+        [JsonPropertyName("price")]
         public float Price { get; set; }
 
-        [JsonProperty("quantity")]
+        [JsonPropertyName("quantity")]
         public float Quantity { get; set; }
 
-        [JsonProperty("symbol")]
+        [JsonPropertyName("symbol")]
         public string Symbol { get; set; }
 
-        [JsonProperty("trade_type")]
+        [JsonPropertyName("trade_type")]
         public string TradeType { get; set; }
     }
 
     public class Adjustment
     {
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
-        
-        [JsonProperty("quantity")]
+
+        [JsonPropertyName("quantity")]
         public float Quantity { get; set; }
     }
 
     public class Option
     {
-        [JsonProperty("option_type")]
+        [JsonPropertyName("option_type")]
         public string OptionType { get; set; }
 
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [JsonProperty("quantity")]
+        [JsonPropertyName("quantity")]
         public float Quantity { get; set; }
     }
 
     public class Journal
     {
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
-        
-        [JsonProperty("quantity")]
+
+        [JsonPropertyName("quantity")]
         public float Quantity { get; set; }
     }
 

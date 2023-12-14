@@ -1,40 +1,40 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Tradier.Client.Helpers;
 
 namespace Tradier.Client.Models.MarketData
 {
     public class HistoricalQuotesRootobject
     {
-        [JsonProperty("history")]
+        [JsonPropertyName("history")]
         public HistoricalQuotes History { get; set; }
     }
 
     public class HistoricalQuotes
     {
-        [JsonProperty("day")]
+        [JsonPropertyName("day")]
         [JsonConverter(typeof(SingleOrArrayConverter<Day>))]
         public List<Day> Day { get; set; }
     }
 
     public class Day
     {
-        [JsonProperty("date")]
+        [JsonPropertyName("date")]
         public string Date { get; set; }
 
-        [JsonProperty("open")]
+        [JsonPropertyName("open")]
         public float Open { get; set; }
 
-        [JsonProperty("high")]
+        [JsonPropertyName("high")]
         public float High { get; set; }
 
-        [JsonProperty("low")]
+        [JsonPropertyName("low")]
         public float Low { get; set; }
 
-        [JsonProperty("close")]
+        [JsonPropertyName("close")]
         public float Close { get; set; }
 
-        [JsonProperty("volume")]
+        [JsonPropertyName("volume")]
         public long Volume { get; set; }
     }
 }

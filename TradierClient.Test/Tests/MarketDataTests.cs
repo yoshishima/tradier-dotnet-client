@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Tradier.Client;
 using TradierClient.Test.Helpers;
 
@@ -36,8 +37,8 @@ namespace TradierClient.Test.Tests
         public async Task PostGetQuotesForSingleSymbol(string symbols, bool greeks)
         {
             var result = await _client.MarketData.PostGetQuotes(symbols, greeks);
-            Assert.IsNotNull(result.Quote.First());
-            Assert.AreEqual(1, result.Quote.Count);
+            ClassicAssert.IsNotNull(result.Quote.First());
+            ClassicAssert.AreEqual(1, result.Quote.Count);
         }
 
         [Test]
@@ -47,15 +48,15 @@ namespace TradierClient.Test.Tests
             var start = TimingHelper.GetLastWednesday();
             var end = TimingHelper.GetLastThursday();
             var result = await _client.MarketData.GetHistoricalQuotes(symbol, interval, start, end);
-            Assert.IsNotNull(result.Day);
-            Assert.AreEqual(2, result.Day.Count);
+            ClassicAssert.IsNotNull(result.Day);
+            ClassicAssert.AreEqual(2, result.Day.Count);
 
             var firstDay = result.Day.First();
             var secondDay = result.Day.Last();
-            Assert.AreEqual(start.ToString("yyyy-MM-dd"), firstDay.Date);
-            Assert.NotZero(firstDay.Open);
-            Assert.AreEqual(end.ToString("yyyy-MM-dd"), secondDay.Date);
-            Assert.NotZero(secondDay.Open);
+            ClassicAssert.AreEqual(start.ToString("yyyy-MM-dd"), firstDay.Date);
+            ClassicAssert.NotZero(firstDay.Open);
+            ClassicAssert.AreEqual(end.ToString("yyyy-MM-dd"), secondDay.Date);
+            ClassicAssert.NotZero(secondDay.Open);
         }
 
         [Test]
@@ -65,12 +66,12 @@ namespace TradierClient.Test.Tests
             var start = TimingHelper.GetLastWednesday();
             var end = TimingHelper.GetLastWednesday();
             var result = await _client.MarketData.GetHistoricalQuotes(symbol, interval, start, end);
-            Assert.IsNotNull(result.Day);
-            Assert.AreEqual(1, result.Day.Count);
+            ClassicAssert.IsNotNull(result.Day);
+            ClassicAssert.AreEqual(1, result.Day.Count);
 
             var firstDay = result.Day.First();
-            Assert.AreEqual(start.ToString("yyyy-MM-dd"), firstDay.Date);
-            Assert.NotZero(firstDay.Open);
+            ClassicAssert.AreEqual(start.ToString("yyyy-MM-dd"), firstDay.Date);
+            ClassicAssert.NotZero(firstDay.Open);
         }
 
         [Test]
@@ -81,8 +82,8 @@ namespace TradierClient.Test.Tests
             var result = await _client.MarketData.GetCompany(symbols);
 
             var companyData = result.FirstOrDefault().Results.FirstOrDefault(x => x.Tables?.CompanyProfile != null);
-            Assert.IsNotNull(companyData);
-            Assert.IsNotNull(companyData?.Tables?.CompanyProfile?.CompanyId);
+            ClassicAssert.IsNotNull(companyData);
+            ClassicAssert.IsNotNull(companyData?.Tables?.CompanyProfile?.CompanyId);
         }
 
         [Test]
@@ -93,15 +94,15 @@ namespace TradierClient.Test.Tests
             var result = await _client.MarketData.GetCorporateCalendars(symbols);
 
             var companyData = result.FirstOrDefault().Results.FirstOrDefault(x => x.Tables?.CorporateCalendars != null);
-            Assert.IsNotNull(companyData);
-            Assert.IsNotNull(companyData?.Tables?.CorporateCalendars?.FirstOrDefault()?.CompanyId);
+            ClassicAssert.IsNotNull(companyData);
+            ClassicAssert.IsNotNull(companyData?.Tables?.CorporateCalendars?.FirstOrDefault()?.CompanyId);
         }
 
         [Test]
         public async Task GetEtbSecuritiesTest()
         {
             var result = await _client.MarketData.GetEtbSecurities();
-            Assert.IsNotNull(result.Security.FirstOrDefault()?.Symbol);
+            ClassicAssert.IsNotNull(result.Security.FirstOrDefault()?.Symbol);
         }
 
         [Test]
@@ -109,7 +110,7 @@ namespace TradierClient.Test.Tests
         public async Task SearchCompaniesTest(string symbol)
         {
             var result = await _client.MarketData.SearchCompanies(symbol);
-            Assert.IsNotNull(result.Security.FirstOrDefault()?.Symbol);
+            ClassicAssert.IsNotNull(result.Security.FirstOrDefault()?.Symbol);
         }
 
         [Test]
@@ -117,7 +118,7 @@ namespace TradierClient.Test.Tests
         public async Task LookupSymbolTest(string query)
         {
             var result = await _client.MarketData.LookupSymbol(query);
-            Assert.IsNotNull(result.Security.FirstOrDefault()?.Symbol);
+            ClassicAssert.IsNotNull(result.Security.FirstOrDefault()?.Symbol);
         }
     }
 }

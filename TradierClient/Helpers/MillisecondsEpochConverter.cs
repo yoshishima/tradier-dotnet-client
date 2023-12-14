@@ -1,24 +1,25 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Helpers
 {
-    public class MillisecondsEpochConverter : DateTimeConverterBase
+    public class MillisecondsEpochConverter : JsonConverter<DateTime>
     {
         private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            writer.WriteRawValue(((DateTime)value - _epoch).TotalMilliseconds + "000");
+            long milliseconds = reader.GetInt64();
+            return _epoch.AddMilliseconds(milliseconds);
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         {
-            if (reader.Value == null) { return null; }
-            return _epoch.AddMilliseconds((long)reader.Value);
+            long milliseconds = (long)(value - _epoch).TotalMilliseconds;
+            writer.WriteNumberValue(milliseconds);
         }
     }
 

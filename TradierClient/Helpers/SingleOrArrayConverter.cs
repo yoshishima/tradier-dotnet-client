@@ -1,40 +1,43 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Helpers
 {
-    public class SingleOrArrayConverter<T> : JsonConverter
+    public class SingleOrArrayConverter<T> : JsonConverter<List<T>>
     {
-        public override bool CanConvert(Type objectType)
+        public override bool CanConvert(Type typeToConvert)
         {
-            return (objectType == typeof(List<T>));
+            return typeToConvert == typeof(List<T>);
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override List<T> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            JToken token = JToken.Load(reader);
-            if (token.Type == JTokenType.Array)
+            using (JsonDocument document = JsonDocument.ParseValue(ref reader))
             {
-                return token.ToObject<List<T>>();
+                if (document.RootElement.ValueKind == JsonValueKind.Array)
+                {
+                    return JsonSerializer.Deserialize<List<T>>(document.RootElement.GetRawText(), options);
+                }
+                else
+                {
+                    T item = JsonSerializer.Deserialize<T>(document.RootElement.GetRawText(), options);
+                    return new List<T> { item };
+                }
             }
-            return new List<T> { token.ToObject<T>() };
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, List<T> value, JsonSerializerOptions options)
         {
-            List<T> list = (List<T>)value;
-            if (list.Count == 1)
+            if (value.Count == 1)
             {
-                value = list[0];
+                JsonSerializer.Serialize(writer, value[0], options);
             }
-            serializer.Serialize(writer, value);
-        }
-
-        public override bool CanWrite
-        {
-            get { return true; }
+            else
+            {
+                JsonSerializer.Serialize(writer, value, options);
+            }
         }
     }
 }

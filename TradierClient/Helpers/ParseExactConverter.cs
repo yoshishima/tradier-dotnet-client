@@ -1,23 +1,30 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Helpers
 {
-    public class ParseExactConverter : DateTimeConverterBase
+    public class ParseExactConverter : JsonConverter<DateTime>
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            writer.WriteRawValue(("\"" + (DateTime)value).ToString() + "\"");
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return default;
+            }
+            else
+            {
+                string dateString = reader.GetString();
+                return DateTime.ParseExact(dateString, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+            }
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         {
-            if (reader.Value == null) { return null; }
-            return DateTime.ParseExact(reader.Value.ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+            writer.WriteStringValue(value.ToString("yyyy-MM-dd HH:mm:ss"));
         }
     }
 }

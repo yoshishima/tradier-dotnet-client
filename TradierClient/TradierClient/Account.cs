@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Linq;
+﻿using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Tradier.Client.Exceptions;
 using Tradier.Client.Helpers;
@@ -31,7 +31,7 @@ namespace Tradier.Client
         public async Task<Profile> GetUserProfile()
         {
             var response = await _requests.GetRequest("user/profile");
-            return JsonConvert.DeserializeObject<ProfileRootObject>(response).Profile;
+            return JsonSerializer.Deserialize<ProfileRootObject>(response).Profile;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Tradier.Client
             }
 
             var response = await _requests.GetRequest($"accounts/{accountNumber}/balances");
-            return JsonConvert.DeserializeObject<BalanceRootObject>(response).Balances;
+            return JsonSerializer.Deserialize<BalanceRootObject>(response).Balances;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Tradier.Client
             }
 
             var response = await _requests.GetRequest($"accounts/{accountNumber}/positions");
-            return JsonConvert.DeserializeObject<PositionsRootobject>(response).Positions;
+            return JsonSerializer.Deserialize<PositionsRootobject>(response).Positions;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Tradier.Client
         public async Task<History> GetHistory(string accountNumber, int page = 1, int limitPerPage = 25)
         {
             var response = await _requests.GetRequest($"accounts/{accountNumber}/history?page={page}&limit={limitPerPage}");
-            return JsonConvert.DeserializeObject<HistoryRootobject>(response).History;
+            return JsonSerializer.Deserialize<HistoryRootobject>(response).History;
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Tradier.Client
         public async Task<GainLoss> GetGainLoss(string accountNumber, int page = 1, int limitPerPage = 25)
         {
             var response = await _requests.GetRequest($"accounts/{accountNumber}/gainloss?page={page}&limit={limitPerPage}");
-            return JsonConvert.DeserializeObject<GainLossRootobject>(response).GainLoss;
+            return JsonSerializer.Deserialize<GainLossRootobject>(response).GainLoss;
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Tradier.Client
             }
 
             var response = await _requests.GetRequest($"accounts/{accountNumber}/orders");
-            return JsonConvert.DeserializeObject<OrdersRootobject>(response).Orders;
+            return JsonSerializer.Deserialize<OrdersRootobject>(response).Orders;
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Tradier.Client
         public async Task<Order> GetOrder(string accountNumber, int orderId)
         {
             var response = await _requests.GetRequest($"accounts/{accountNumber}/orders/{orderId}");
-            return JsonConvert.DeserializeObject<Orders>(response).Order.FirstOrDefault();
+            return JsonSerializer.Deserialize<Orders>(response).Order.FirstOrDefault();
         }
     }
 }

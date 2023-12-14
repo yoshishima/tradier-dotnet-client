@@ -1,65 +1,65 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Models.Trading
 {
     public class OrderPreviewResponseRootobject
     {
-        [JsonProperty("order")]
+        [JsonPropertyName("order")]
         public OrderPreviewResponse OrderPreviewResponse { get; set; }
     }
 
     public class OrderPreviewResponse : IOrder
     {
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [JsonProperty("commission")]
+        [JsonPropertyName("commission")]
         public float? Commision { get; set; }
 
-        [JsonProperty("cost")]
+        [JsonPropertyName("cost")]
         public float? Cost { get; set; }
 
-        [JsonProperty("fees")]
+        [JsonPropertyName("fees")]
         public float? Fees { get; set; }
 
-        [JsonProperty("symbol")]
+        [JsonPropertyName("symbol")]
         public string Symbol { get; set; }
 
-        [JsonProperty("quantity")]
+        [JsonPropertyName("quantity")]
         public int? Quantity { get; set; }
 
-        [JsonProperty("side")]
+        [JsonPropertyName("side")]
         public string Side { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        [JsonProperty("duration")]
+        [JsonPropertyName("duration")]
         public string Duration { get; set; }
 
-        [JsonProperty("result")]
+        [JsonPropertyName("result")]
         public bool? Result { get; set; }
 
-        [JsonProperty("order_cost")]
+        [JsonPropertyName("order_cost")]
         public float? OrderCost { get; set; }
 
-        [JsonProperty("margin_change")]
+        [JsonPropertyName("margin_change")]
         public float? MarginChange { get; set; }
 
-        [JsonProperty("request_date")]
+        [JsonPropertyName("request_date")]
         public DateTime? RequestDate { get; set; }
 
-        [JsonProperty("extended_hours")]
+        [JsonPropertyName("extended_hours")]
         public bool? ExtendedHours { get; set; }
 
-        [JsonProperty("class")]
+        [JsonPropertyName("class")]
         public string ClassOrder { get; set; }
 
-        [JsonProperty("strategy")]
+        [JsonPropertyName("strategy")]
         public string Strategy { get; set; }
 
-        [JsonProperty("day_trades")]
+        [JsonPropertyName("day_trades")]
         public int? DayTrades { get; set; }
     }
 }

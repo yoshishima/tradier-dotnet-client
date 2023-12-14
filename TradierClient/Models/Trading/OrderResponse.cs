@@ -1,23 +1,22 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Models.Trading
 {
     public class OrderResponseRootobject
     {
-        [JsonProperty("order")]
+        [JsonPropertyName("order")]
         public OrderReponse OrderReponse { get; set; }
     }
 
     public class OrderReponse : IOrder
     {
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [JsonProperty("partner_id")]
+        [JsonPropertyName("partner_id")]
         public string PartnerId { get; set; }
     }
 }

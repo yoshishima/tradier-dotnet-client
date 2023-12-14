@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using Tradier.Client.Helpers;
@@ -8,131 +8,131 @@ namespace Tradier.Client.Models.Account
 
     public class OrdersRootobject
     {
-        [JsonProperty("orders")]
+        [JsonPropertyName("orders")]
         public Orders Orders { get; set; }
     }
 
     public class Orders
     {
-        [JsonProperty("order")]
+        [JsonPropertyName("order")]
         [JsonConverter(typeof(SingleOrArrayConverter<Order>))]
         public List<Order> Order { get; set; }
     }
 
     public class Order
     {
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        [JsonProperty("symbol")]
+        [JsonPropertyName("symbol")]
         public string Symbol { get; set; }
 
-        [JsonProperty("side")]
+        [JsonPropertyName("side")]
         public string Side { get; set; }
 
-        [JsonProperty("quantity")]
+        [JsonPropertyName("quantity")]
         public float Quantity { get; set; }
 
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [JsonProperty("duration")]
+        [JsonPropertyName("duration")]
         public string Duration { get; set; }
 
-        [JsonProperty("price")]
+        [JsonPropertyName("price")]
         public float Price { get; set; }
 
-        [JsonProperty("avg_fill_price")]
+        [JsonPropertyName("avg_fill_price")]
         public float AvgFillPrice { get; set; }
 
-        [JsonProperty("exec_quantity")]
+        [JsonPropertyName("exec_quantity")]
         public float ExecQuantity { get; set; }
 
-        [JsonProperty("last_fill_price")]
+        [JsonPropertyName("last_fill_price")]
         public float LastFillPrice { get; set; }
 
-        [JsonProperty("last_fill_quantity")]
+        [JsonPropertyName("last_fill_quantity")]
         public float LastFillQuantity { get; set; }
 
-        [JsonProperty("remaining_quantity")]
+        [JsonPropertyName("remaining_quantity")]
         public float RemainingQuantity { get; set; }
 
-        [JsonProperty("create_date")]
+        [JsonPropertyName("create_date")]
         public DateTime CreateDate { get; set; }
 
-        [JsonProperty("transaction_date")]
+        [JsonPropertyName("transaction_date")]
         public DateTime TransactionDate { get; set; }
 
-        [JsonProperty("_class")]
+        [JsonPropertyName("_class")]
         public string Class { get; set; }
 
-        [JsonProperty("option_symbol")]
+        [JsonPropertyName("option_symbol")]
         public string OptionSymbol { get; set; }
 
-        [JsonProperty("num_legs")]
+        [JsonPropertyName("num_legs")]
         public int NumLegs { get; set; }
 
-        [JsonProperty("strategy")]
+        [JsonPropertyName("strategy")]
         public string Strategy { get; set; }
 
-        [JsonProperty("leg")]
+        [JsonPropertyName("leg")]
         public Leg[] Leg { get; set; }
     }
 
     public class Leg
     {
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        [JsonProperty("symbol")]
+        [JsonPropertyName("symbol")]
         public string Symbol { get; set; }
 
-        [JsonProperty("side")]
+        [JsonPropertyName("side")]
         public string Side { get; set; }
 
-        [JsonProperty("quantity")]
+        [JsonPropertyName("quantity")]
         public float Quantity { get; set; }
 
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [JsonProperty("duration")]
+        [JsonPropertyName("duration")]
         public string Duration { get; set; }
 
-        [JsonProperty("price")]
+        [JsonPropertyName("price")]
         public float Price { get; set; }
 
-        [JsonProperty("avg_fill_price")]
+        [JsonPropertyName("avg_fill_price")]
         public float AvgFillPrice { get; set; }
 
-        [JsonProperty("exec_quantity")]
+        [JsonPropertyName("exec_quantity")]
         public float ExecQuantity { get; set; }
 
-        [JsonProperty("last_fill_price")]
+        [JsonPropertyName("last_fill_price")]
         public float LastFillPrice { get; set; }
 
-        [JsonProperty("last_fill_quantity")]
+        [JsonPropertyName("last_fill_quantity")]
         public float LastFillQuantity { get; set; }
 
-        [JsonProperty("remaining_quantity")]
+        [JsonPropertyName("remaining_quantity")]
         public float RemainingQuantity { get; set; }
 
-        [JsonProperty("create_date")]
+        [JsonPropertyName("create_date")]
         public DateTime CreateDate { get; set; }
 
-        [JsonProperty("transaction_date")]
+        [JsonPropertyName("transaction_date")]
         public DateTime TransactionDate { get; set; }
 
-        [JsonProperty("_class")]
+        [JsonPropertyName("_class")]
         public string Class { get; set; }
 
-        [JsonProperty("option_symbol")]
+        [JsonPropertyName("option_symbol")]
         public string OptionSymbol { get; set; }
     }
 

@@ -1,25 +1,24 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Models.Exception
 {
     public class FaultRootobject
     {
-        [JsonProperty("fault")]
+        [JsonPropertyName("fault")]
         public Fault Fault { get; set; }
     }
 
     public class Fault
     {
-        [JsonProperty("faultstring")]
+        [JsonPropertyName("faultstring")]
         public string FaultString { get; set; }
-        [JsonProperty("detail")]
+        [JsonPropertyName("detail")]
         public Detail Detail { get; set; }
     }
 
     public class Detail
     {
-        [JsonProperty("errorcode")]
+        [JsonPropertyName("errorcode")]
         public string ErrorCode { get; set; }
     }
-
 }

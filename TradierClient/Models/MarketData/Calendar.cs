@@ -1,78 +1,79 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Models.MarketData
 {
 
     public class CalendarRootobject
     {
-        [JsonProperty("calendar")]
+        [JsonPropertyName("calendar")]
         public Calendar Calendar { get; set; }
     }
 
     public class Calendar
     {
-        [JsonProperty("month")]
+        [JsonPropertyName("month")]
         public int Month { get; set; }
 
-        [JsonProperty("year")]
+        [JsonPropertyName("year")]
         public int Year { get; set; }
 
-        [JsonProperty("days")]
+        [JsonPropertyName("days")]
         public Days Days { get; set; }
     }
 
     public class Days
     {
-        [JsonProperty("day")]
+        [JsonPropertyName("day")]
         public List<CalendarDay> Day { get; set; }
     }
 
     public class CalendarDay
     {
-        [JsonProperty("date")]
+        [JsonPropertyName("date")]
         public string Date { get; set; }
 
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [JsonProperty("premarket")]
+        [JsonPropertyName("premarket")]
         public Premarket Premarket { get; set; }
 
-        [JsonProperty("open")]
+        [JsonPropertyName("open")]
         public Open Open { get; set; }
 
-        [JsonProperty("postmarket")]
+        [JsonPropertyName("postmarket")]
         public Postmarket Postmarket { get; set; }
     }
 
     public class Premarket
     {
-        [JsonProperty("start")]
+        [JsonPropertyName("start")]
         public string Start { get; set; }
 
-        [JsonProperty("end")]
+        [JsonPropertyName("end")]
         public string End { get; set; }
     }
 
     public class Open
     {
-        [JsonProperty("start")]
+        [JsonPropertyName("start")]
         public string Start { get; set; }
 
-        [JsonProperty("end")]
+        [JsonPropertyName("end")]
         public string End { get; set; }
     }
 
     public class Postmarket
     {
-        [JsonProperty("start")]
+        [JsonPropertyName("start")]
         public string Start { get; set; }
 
-        [JsonProperty("end")]
+        [JsonPropertyName("end")]
         public string End { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Tradier.Client.Models.Exception;
 
 namespace Tradier.Client.Exceptions
@@ -25,7 +25,7 @@ namespace Tradier.Client.Exceptions
             {
                 if (Equals(response.Content.Headers.ContentType, MediaTypeHeaderValue.Parse("application/json")))
                 {
-                    Fault fault = JsonConvert.DeserializeObject<FaultRootobject>(resp.Result).Fault;
+                    Fault fault = JsonSerializer.Deserialize<FaultRootobject>(resp.Result).Fault;
                     throw new TradierClientException(fault, response);
 
                 }

@@ -1,67 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using Tradier.Client.Helpers;
 
 namespace Tradier.Client.Models.MarketData
 {
     public class CorporateCalendarRootObject
     {
-        [JsonProperty("request")]
+        [JsonPropertyName("request")]
         public string Request { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        [JsonProperty("results")]
+        [JsonPropertyName("results")]
         public List<CorporateCalendarData> Results { get; set; }
     }
 
     public class CorporateCalendarData
     {
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        [JsonProperty("tables")]
+        [JsonPropertyName("tables")]
         public CorporateCalendarTable Tables { get; set; }
     }
 
     public class CorporateCalendarTable
     {
-        [JsonProperty("corporate_calendars")]
+        [JsonPropertyName("corporate_calendars")]
         public List<CorporateCalendar> CorporateCalendars { get; set; }
     }
 
     public class CorporateCalendar
     {
-        [JsonProperty("company_id")]
+        [JsonPropertyName("company_id")]
         public string CompanyId { get; set; }
 
-        [JsonProperty("begin_date_time")]
+        [JsonPropertyName("begin_date_time")]
         public DateTime BeginDateTime { get; set; }
 
-        [JsonProperty("end_date_time")]
+        [JsonPropertyName("end_date_time")]
         public DateTime EndDateTime { get; set; }
 
-        [JsonProperty("event_type")]
+        [JsonPropertyName("event_type")]
         public int EventType { get; set; }
 
-        [JsonProperty("estimated_date_for_next_event")]
+        [JsonPropertyName("estimated_date_for_next_event")]
         public DateTime EstimatedDateForNextEvent { get; set; }
 
-        [JsonProperty("event")]
+        [JsonPropertyName("event")]
         public string Event { get; set; }
 
-        [JsonProperty("event_fiscal_year")]
+        [JsonPropertyName("event_fiscal_year")]
         public int EventFiscalYear { get; set; }
 
-        [JsonProperty("event_status")]
+        [JsonPropertyName("event_status")]
         public string EventStatus { get; set; }
 
-        [JsonProperty("time_zone")]
+        [JsonPropertyName("time_zone")]
         public DateTime TimeZone { get; set; }
     }
 }

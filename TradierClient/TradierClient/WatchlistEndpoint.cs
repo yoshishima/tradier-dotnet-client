@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Tradier.Client.Helpers;
 using Tradier.Client.Models.Watchlist;
@@ -30,7 +31,7 @@ namespace Tradier.Client
         public async Task<Watchlists> GetWatchlists()
         {
             var response = await _requests.GetRequest("watchlists");
-            return JsonConvert.DeserializeObject<WatchlistsRootobject>(response).Watchlists;
+            return JsonSerializer.Deserialize<WatchlistsRootobject>(response).Watchlists;
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace Tradier.Client
         public async Task<Watchlist> GetWatchlist(string watchlistId)
         {
             var response = await _requests.GetRequest($"watchlists/{watchlistId}");
-            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlist;
+            return JsonSerializer.Deserialize<WatchlistRootobject>(response).Watchlist;
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PostRequest($"watchlists", data);
-            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlist;
+            return JsonSerializer.Deserialize<WatchlistRootobject>(response).Watchlist;
         }
 
         /// <summary>
@@ -89,7 +90,7 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PutRequest($"watchlists/{watchlistId}", data);
-            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlist;
+            return JsonSerializer.Deserialize<WatchlistRootobject>(response).Watchlist;
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace Tradier.Client
         public async Task<Watchlists> DeleteWatchlist(string watchlistId)
         {
             var response = await _requests.DeleteRequest($"watchlists/{watchlistId}");
-            return JsonConvert.DeserializeObject<WatchlistsRootobject>(response).Watchlists;
+            return JsonSerializer.Deserialize<WatchlistsRootobject>(response).Watchlists;
         }
 
         /// <summary>
@@ -122,7 +123,7 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PostRequest($"watchlists/{watchlistId}/symbols", data);
-            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlist;
+            return JsonSerializer.Deserialize<WatchlistRootobject>(response).Watchlist;
         }
 
         /// <summary>
@@ -131,7 +132,7 @@ namespace Tradier.Client
         public async Task<Watchlist> RemoveSymbolFromWatchlist(string watchlistId, string symbol)
         {
             var response = await _requests.DeleteRequest($"watchlists/{watchlistId}/symbols/{symbol}");
-            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlist;
+            return JsonSerializer.Deserialize<WatchlistRootobject>(response).Watchlist;
         }
     }
 }

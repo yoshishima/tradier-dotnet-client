@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Tradier.Client.Exceptions;
 using Tradier.Client.Helpers;
@@ -348,7 +348,7 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PutRequest($"accounts/{accountNumber}/orders/{orderId}", data);
-            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
+            return JsonSerializer.Deserialize<OrderResponseRootobject>(response).OrderReponse;
         }
 
         /// <summary>
@@ -370,18 +370,18 @@ namespace Tradier.Client
         public async Task<OrderReponse> CancelOrder(string accountNumber, int orderId)
         {
             var response = await _requests.DeleteRequest($"accounts/{accountNumber}/orders/{orderId}");
-            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
+            return JsonSerializer.Deserialize<OrderResponseRootobject>(response).OrderReponse;
         }
 
         private IOrder GetOrderReponseOrOrderPreviewResponse(string response, bool preview)
         {
             if (preview)
             {
-                return JsonConvert.DeserializeObject<OrderPreviewResponseRootobject>(response).OrderPreviewResponse;
+                return JsonSerializer.Deserialize<OrderPreviewResponseRootobject>(response).OrderPreviewResponse;
             }
             else
             {
-                return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
+                return JsonSerializer.Deserialize<OrderResponseRootobject>(response).OrderReponse;
             }
         }
     }

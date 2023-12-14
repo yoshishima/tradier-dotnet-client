@@ -1,34 +1,34 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using Tradier.Client.Helpers;
 
 namespace Tradier.Client.Models.MarketData
 {
     public class ClockRootobject
     {
-        [JsonProperty("clock")]
+        [JsonPropertyName("clock")]
         public Clock Clock { get; set; }
     }
 
     public class Clock
     {
-        [JsonProperty("date")]
+        [JsonPropertyName("date")]
         public string Date { get; set; }
 
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [JsonProperty("state")]
+        [JsonPropertyName("state")]
         public string State { get; set; }
 
-        [JsonProperty("timestamp")]
+        [JsonPropertyName("timestamp")]
         [JsonConverter(typeof(TimestampConverter))]
         public DateTime Timestamp { get; set; }
 
-        [JsonProperty("next_change")]
+        [JsonPropertyName("next_change")]
         public string NextChange { get; set; }
 
-        [JsonProperty("next_state")]
+        [JsonPropertyName("next_state")]
         public string NextState { get; set; }
     }
 }

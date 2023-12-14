@@ -1,50 +1,45 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
-namespace Tradier.Client.Models.Account
+public class GainLossRootobject
 {
+    [JsonPropertyName("gainloss")]
+    public GainLoss GainLoss { get; set; }
+}
 
-    public class GainLossRootobject
-    {
-        [JsonProperty("gainloss")]
-        public GainLoss GainLoss { get; set; }
-    }
+public class GainLoss
+{
+    [JsonPropertyName("closed_position")]
+    public List<ClosedPosition> ClosedPosition { get; set; }
+}
 
-    public class GainLoss
-    {
-        [JsonProperty("closed_position")]
-        public List<ClosedPosition> ClosedPosition { get; set; }
-    }
+public class ClosedPosition
+{
+    [JsonPropertyName("close_date")]
+    public DateTime CloseDate { get; set; }
 
-    public class ClosedPosition
-    {
-        [JsonProperty("close_date")]
-        public DateTime CloseDate { get; set; }
-        
-        [JsonProperty("cost")]
-        public float Cost { get; set; }
-        
-        [JsonProperty("gain_loss")]
-        public float GainLoss { get; set; }
-        
-        [JsonProperty("gain_loss_percent")]
-        public float GainLossPercent { get; set; }
-        
-        [JsonProperty("open_date")]
-        public DateTime OpenDate { get; set; }
-        
-        [JsonProperty("proceeds")]
-        public float Proceeds { get; set; }
-        
-        [JsonProperty("quantity")]
-        public float Quantity { get; set; }
-        
-        [JsonProperty("symbol")]
-        public string Symbol { get; set; }
-        
-        [JsonProperty("term")]
-        public int Term { get; set; }
-    }
+    [JsonPropertyName("cost")]
+    public float Cost { get; set; }
 
+    [JsonPropertyName("gain_loss")]
+    public float GainLoss { get; set; }
+
+    [JsonPropertyName("gain_loss_percent")]
+    public float GainLossPercent { get; set; }
+
+    [JsonPropertyName("open_date")]
+    public DateTime OpenDate { get; set; }
+
+    [JsonPropertyName("proceeds")]
+    public float Proceeds { get; set; }
+
+    [JsonPropertyName("quantity")]
+    public float Quantity { get; set; }
+
+    [JsonPropertyName("symbol")]
+    public string Symbol { get; set; }
+
+    [JsonPropertyName("term")]
+    public int Term { get; set; }
 }

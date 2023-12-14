@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Tradier.Client.Helpers;
 using Tradier.Client.Models.MarketData;
@@ -32,7 +33,7 @@ namespace Tradier.Client
         {
             string stringExpiration = expiration.ToString("yyyy-MM-dd");
             var response = await _requests.GetRequest($"markets/options/chains?symbol={symbol}&expiration={stringExpiration}&greeks={greeks}");
-            return JsonConvert.DeserializeObject<OptionChainRootobject>(response).Options;
+            return JsonSerializer.Deserialize<OptionChainRootobject>(response).Options;
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Tradier.Client
         public async Task<Expirations> GetOptionExpirations(string symbol, bool? includeAllRoots = false, bool? strikes = false)
         {
             var response = await _requests.GetRequest($"markets/options/expirations?symbol={symbol}&includeAllRoots={includeAllRoots}&strikes={strikes}");
-            return JsonConvert.DeserializeObject<OptionExpirationsRootobject>(response).Expirations;
+            return JsonSerializer.Deserialize<OptionExpirationsRootobject>(response).Expirations;
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace Tradier.Client
             string strSymbols = String.Join(",", symbols).Trim();
 
             var response = await _requests.GetRequest($"markets/quotes?symbols={strSymbols}&greeks={greeks}");
-            return JsonConvert.DeserializeObject<QuoteRootobject>(response).Quotes;
+            return JsonSerializer.Deserialize<QuoteRootobject>(response).Quotes;
         }
 
         /// <summary>
@@ -95,7 +96,7 @@ namespace Tradier.Client
             string stringEnd = end.ToString("yyyy-MM-dd");
 
             var response = await _requests.GetRequest($"markets/history?symbol={symbol}&interval={interval}&start={stringStart}&end={stringEnd}");
-            return JsonConvert.DeserializeObject<HistoricalQuotesRootobject>(response).History;
+            return JsonSerializer.Deserialize<HistoricalQuotesRootobject>(response).History;
         }
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PostRequest($"markets/quotes", data);
-            return JsonConvert.DeserializeObject<QuoteRootobject>(response).Quotes;
+            return JsonSerializer.Deserialize<QuoteRootobject>(response).Quotes;
         }
 
         /// <summary>
@@ -140,7 +141,7 @@ namespace Tradier.Client
         {
             string stringExpiration = expiration.ToString("yyyy-MM-dd");
             var response = await _requests.GetRequest($"markets/options/strikes?symbol={symbol}&expiration={stringExpiration}");
-            return JsonConvert.DeserializeObject<OptionStrikesRootobject>(response).Strikes;
+            return JsonSerializer.Deserialize<OptionStrikesRootobject>(response).Strikes;
         }
 
         /// <summary>
@@ -164,7 +165,7 @@ namespace Tradier.Client
             string stringEnd = end.ToString("yyyy-MM-dd HH:mm");
 
             var response = await _requests.GetRequest($"markets/timesales?symbol={symbol}&interval={interval}&start={stringStart}&end={stringEnd}&session_filter={filter}");
-            return JsonConvert.DeserializeObject<TimesalesRootobject>(response).Series;
+            return JsonSerializer.Deserialize<TimesalesRootobject>(response).Series;
         }
 
         /// <summary>
@@ -173,7 +174,7 @@ namespace Tradier.Client
         public async Task<Securities> GetEtbSecurities()
         {
             var response = await _requests.GetRequest($"markets/etb");
-            return JsonConvert.DeserializeObject<SecuritiesRootobject>(response).Securities;
+            return JsonSerializer.Deserialize<SecuritiesRootobject>(response).Securities;
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace Tradier.Client
         public async Task<Clock> GetClock()
         {
             var response = await _requests.GetRequest($"markets/clock");
-            return JsonConvert.DeserializeObject<ClockRootobject>(response).Clock;
+            return JsonSerializer.Deserialize<ClockRootobject>(response).Clock;
         }
 
         /// <summary>
@@ -191,7 +192,7 @@ namespace Tradier.Client
         public async Task<Models.MarketData.Calendar> GetCalendar(int? month = null, int? year = null)
         {
             var response = await _requests.GetRequest($"markets/calendar?month={month}&year={year}");
-            return JsonConvert.DeserializeObject<CalendarRootobject>(response).Calendar;
+            return JsonSerializer.Deserialize<CalendarRootobject>(response).Calendar;
         }
 
         /// <summary>
@@ -200,7 +201,7 @@ namespace Tradier.Client
         public async Task<Securities> SearchCompanies(string query, bool indexes = false)
         {
             var response = await _requests.GetRequest($"markets/search?q={query}&indexes={indexes}");
-            return JsonConvert.DeserializeObject<SecuritiesRootobject>(response).Securities;
+            return JsonSerializer.Deserialize<SecuritiesRootobject>(response).Securities;
         }
 
         /// <summary>
@@ -221,7 +222,7 @@ namespace Tradier.Client
             }
 
             var response = await _requests.GetRequest(urlBuilder);
-            return JsonConvert.DeserializeObject<SecuritiesRootobject>(response).Securities;
+            return JsonSerializer.Deserialize<SecuritiesRootobject>(response).Securities;
         }
 
         /// <summary>
@@ -230,7 +231,7 @@ namespace Tradier.Client
         public async Task<List<Symbol>> LookupOptionSymbols(string symbol)
         {
             var response = await _requests.GetRequest($"markets/options/lookup?underlying={symbol}");
-            return JsonConvert.DeserializeObject<OptionSymbolsRootobject>(response).Symbols;
+            return JsonSerializer.Deserialize<OptionSymbolsRootobject>(response).Symbols;
         }
 
         /// Fundamentals (BETA)
@@ -239,13 +240,13 @@ namespace Tradier.Client
         public async Task<List<CompanyDataRootObject>> GetCompany(string symbols)
         {
             var response = await _requests.GetRequest($"/beta/markets/fundamentals/company?symbols={symbols}");
-            return JsonConvert.DeserializeObject<List<CompanyDataRootObject>>(response);
+            return JsonSerializer.Deserialize<List<CompanyDataRootObject>>(response);
         }
 
         public async Task<List<CorporateCalendarRootObject>> GetCorporateCalendars(string symbols)
         {
             var response = await _requests.GetRequest($"/beta/markets/fundamentals/calendars?symbols={symbols}");
-            return JsonConvert.DeserializeObject<List<CorporateCalendarRootObject>>(response);
+            return JsonSerializer.Deserialize<List<CorporateCalendarRootObject>>(response);
         }
     }
 }

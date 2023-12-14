@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Tradier.Client.Helpers;
 
 namespace Tradier.Client.Models.Watchlist
@@ -7,51 +7,51 @@ namespace Tradier.Client.Models.Watchlist
 
     public class WatchlistsRootobject
     {
-        [JsonProperty("watchlists")]
+        [JsonPropertyName("watchlists")]
         public Watchlists Watchlists { get; set; }
     }
 
     public class WatchlistRootobject
     {
-        [JsonProperty("watchlist")]
+        [JsonPropertyName("watchlist")]
         public Watchlist Watchlist { get; set; }
     }
 
     public class Watchlists
     {
-        [JsonProperty("watchlist")]
+        [JsonPropertyName("watchlist")]
         [JsonConverter(typeof(SingleOrArrayConverter<Watchlist>))]
         public List<Watchlist> Watchlist { get; set; }
     }
 
     public class Watchlist
     {
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        [JsonProperty("public_id")]
+        [JsonPropertyName("public_id")]
         public string PublicId { get; set; }
-        
-        [JsonProperty("items")]
+
+        [JsonPropertyName("items")]
         public Items Items { get; set; }
     }
 
     public class Items
     {
-        [JsonProperty("item")]
+        [JsonPropertyName("item")]
         [JsonConverter(typeof(SingleOrArrayConverter<Item>))]
         public List<Item> Item { get; set; }
     }
 
     public class Item
     {
-        [JsonProperty("symbol")]
+        [JsonPropertyName("symbol")]
         public string Symbol { get; set; }
-        
-        [JsonProperty("id")]
+
+        [JsonPropertyName("id")]
         public string Id { get; set; }
     }
 }

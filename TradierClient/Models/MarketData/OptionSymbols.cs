@@ -1,21 +1,21 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Models.MarketData
 {
 
     public class OptionSymbolsRootobject
     {
-        [JsonProperty("symbols")]
+        [JsonPropertyName("symbols")]
         public List<Symbol> Symbols { get; set; }
     }
 
     public class Symbol
     {
-        [JsonProperty("rootSymbol")]
+        [JsonPropertyName("rootSymbol")]
         public string RootSymbol { get; set; }
 
-        [JsonProperty("options")]
+        [JsonPropertyName("options")]
         public List<string> Options { get; set; }
     }
 

@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Tradier.Client.Helpers;
 
 namespace Tradier.Client.Models.MarketData
@@ -8,44 +8,44 @@ namespace Tradier.Client.Models.MarketData
 
     public class TimesalesRootobject
     {
-        [JsonProperty("series")]
+        [JsonPropertyName("series")]
         public Series Series { get; set; }
     }
 
     public class Series
     {
-        [JsonProperty("data")]
+        [JsonPropertyName("data")]
         public List<Datum> Data { get; set; }
     }
 
     public class Datum
     {
-        [JsonProperty("time")]
+        [JsonPropertyName("time")]
         public DateTime Time { get; set; }
 
-        [JsonProperty("timestamp")]
+        [JsonPropertyName("timestamp")]
         [JsonConverter(typeof(TimestampConverter))]
         public DateTime Timestamp { get; set; }
 
-        [JsonProperty("price")]
+        [JsonPropertyName("price")]
         public float Price { get; set; }
 
-        [JsonProperty("open")]
+        [JsonPropertyName("open")]
         public float Open { get; set; }
 
-        [JsonProperty("high")]
+        [JsonPropertyName("high")]
         public float High { get; set; }
 
-        [JsonProperty("low")]
+        [JsonPropertyName("low")]
         public float Low { get; set; }
 
-        [JsonProperty("close")]
+        [JsonPropertyName("close")]
         public float Close { get; set; }
 
-        [JsonProperty("volume")]
+        [JsonPropertyName("volume")]
         public int Volume { get; set; }
 
-        [JsonProperty("vwap")]
+        [JsonPropertyName("vwap")]
         public float Vwap { get; set; }
     }
 }

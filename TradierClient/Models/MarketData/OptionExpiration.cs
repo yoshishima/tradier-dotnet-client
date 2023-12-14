@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Models.MarketData
 {
 
     public class OptionExpirationsRootobject
     {
-        [JsonProperty("expirations")]
+        [JsonPropertyName("expirations")]
         public Expirations Expirations { get; set; }
     }
 
     public class Expirations
     {
-        [JsonProperty("date")]
+        [JsonPropertyName("date")]
         public List<DateTime> Date { get; set; }
     }
 

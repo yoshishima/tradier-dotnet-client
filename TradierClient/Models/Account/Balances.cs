@@ -1,128 +1,128 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 
 namespace Tradier.Client.Models.Account
 {
     public class BalanceRootObject
     {
-        [JsonProperty("balances")]
+        [JsonPropertyName("balances")]
         public Balances Balances { get; set; }
     }
 
     public class Balances
     {
-        [JsonProperty("option_short_value")]
+        [JsonPropertyName("option_short_value")]
         public float OptionShortValue { get; set; }
 
-        [JsonProperty("total_equity")]
+        [JsonPropertyName("total_equity")]
         public float TotalEquity { get; set; }
 
-        [JsonProperty("account_number")]
+        [JsonPropertyName("account_number")]
         public string AccountNumber { get; set; }
 
-        [JsonProperty("account_type")]
+        [JsonPropertyName("account_type")]
         public string AccountType { get; set; }
 
-        [JsonProperty("close_pl")]
+        [JsonPropertyName("close_pl")]
         public float ClosePL { get; set; }
 
-        [JsonProperty("current_requirement")]
+        [JsonPropertyName("current_requirement")]
         public float CurrentRequirement { get; set; }
 
-        [JsonProperty("equity")]
+        [JsonPropertyName("equity")]
         public int Equity { get; set; }
 
-        [JsonProperty("long_market_value")]
+        [JsonPropertyName("long_market_value")]
         public float LongMarketValue { get; set; }
 
-        [JsonProperty("market_value")]
+        [JsonPropertyName("market_value")]
         public float MarketValue { get; set; }
 
-        [JsonProperty("open_pl")]
+        [JsonPropertyName("open_pl")]
         public float OpenPL { get; set; }
 
-        [JsonProperty("option_long_value")]
+        [JsonPropertyName("option_long_value")]
         public float OptionLongValue { get; set; }
 
-        [JsonProperty("option_requirement")]
+        [JsonPropertyName("option_requirement")]
         public float OptionRequirement { get; set; }
 
-        [JsonProperty("pending_orders_count")]
+        [JsonPropertyName("pending_orders_count")]
         public int PendingOrdersCount { get; set; }
 
-        [JsonProperty("short_market_value")]
+        [JsonPropertyName("short_market_value")]
         public float ShortMarketValue { get; set; }
 
-        [JsonProperty("stock_long_value")]
+        [JsonPropertyName("stock_long_value")]
         public float StockLongValue { get; set; }
 
-        [JsonProperty("total_cash")]
+        [JsonPropertyName("total_cash")]
         public float TotalCash { get; set; }
 
-        [JsonProperty("uncleared_funds")]
+        [JsonPropertyName("uncleared_funds")]
         public int UnclearedFunds { get; set; }
 
-        [JsonProperty("pending_cash")]
+        [JsonPropertyName("pending_cash")]
         public float PendingCash { get; set; }
 
-        [JsonProperty("margin")]
+        [JsonPropertyName("margin")]
         public Margin Margin { get; set; }
 
-        [JsonProperty("cash")]
+        [JsonPropertyName("cash")]
         public Cash Cash { get; set; }
 
-        [JsonProperty("pdt")]
+        [JsonPropertyName("pdt")]
         public PatternDayTrader PatternDayTrader { get; set; }
     }
 
     public class Margin
     {
-        [JsonProperty("fed_call")]
+        [JsonPropertyName("fed_call")]
         public int FedCall { get; set; }
 
-        [JsonProperty("maintenance_call")]
+        [JsonPropertyName("maintenance_call")]
         public int MaintenanceCall { get; set; }
 
-        [JsonProperty("option_buying_power")]
+        [JsonPropertyName("option_buying_power")]
         public float OptionBuyingPower { get; set; }
 
-        [JsonProperty("stock_buying_power")]
+        [JsonPropertyName("stock_buying_power")]
         public float StockBuyingPower { get; set; }
 
-        [JsonProperty("stock_short_value")]
+        [JsonPropertyName("stock_short_value")]
         public int StockShortValue { get; set; }
 
-        [JsonProperty("sweep")]
+        [JsonPropertyName("sweep")]
         public int Sweep { get; set; }
     }
 
     public class Cash
     {
-        [JsonProperty("cash_available")]
+        [JsonPropertyName("cash_available")]
         public float CashAvailable { get; set; }
 
-        [JsonProperty("sweep")]
+        [JsonPropertyName("sweep")]
         public int Sweep { get; set; }
 
-        [JsonProperty("unsettled_funds")]
+        [JsonPropertyName("unsettled_funds")]
         public float UnsettledFunds { get; set; }
     }
 
     public class PatternDayTrader
     {
-        [JsonProperty("fed_call")]
+        [JsonPropertyName("fed_call")]
         public int FedCall { get; set; }
 
-        [JsonProperty("maintenance_call")]
+        [JsonPropertyName("maintenance_call")]
         public int MaintenanceCall { get; set; }
 
-        [JsonProperty("option_buying_power")]
+        [JsonPropertyName("option_buying_power")]
         public float OptionBuyingPower { get; set; }
 
-        [JsonProperty("stock_buying_power")]
+        [JsonPropertyName("stock_buying_power")]
         public float StockBuyingPower { get; set; }
 
-        [JsonProperty("stock_short_value")]
+        [JsonPropertyName("stock_short_value")]
         public int StockShortValue { get; set; }
     }
 

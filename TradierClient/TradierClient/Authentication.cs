@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Tradier.Client.Helpers;
 using Tradier.Client.Models.Authentication;
@@ -34,7 +34,7 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PostRequest("oauth/accesstoken", data);
-            return JsonConvert.DeserializeObject<Token>(response);
+            return JsonSerializer.Deserialize<Token>(response);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PostRequest("oauth/accesstoken", data);
-            return JsonConvert.DeserializeObject<Token>(response);
+            return JsonSerializer.Deserialize<Token>(response);
         }
     }
 }

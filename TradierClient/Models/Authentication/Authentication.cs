@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json.Serialization;
 using Tradier.Client.Helpers;
 
 namespace Tradier.Client.Models.Authentication
@@ -7,23 +7,23 @@ namespace Tradier.Client.Models.Authentication
 
     public class Token
     {
-        [JsonProperty("access_token")]
+        [JsonPropertyName("access_token")]
         public string AccessToken { get; set; }
 
-        [JsonProperty("refresh_token")]
+        [JsonPropertyName("refresh_token")]
         public int RefreshToken { get; set; }
 
-        [JsonProperty("expires_in")]
+        [JsonPropertyName("expires_in")]
         [JsonConverter(typeof(TimestampConverter))]
         public DateTime ExpiresIn { get; set; }
 
-        [JsonProperty("issued_at")]
+        [JsonPropertyName("issued_at")]
         public DateTime IssuedAt { get; set; }
 
-        [JsonProperty("scope")]
+        [JsonPropertyName("scope")]
         public string Scope { get; set; }
 
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
     }
 }

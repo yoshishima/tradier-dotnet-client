@@ -1,20 +1,20 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Models.Streaming
 {
 
     public class StreamRootobject
     {
-        [JsonProperty("stream")]
+        [JsonPropertyName("stream")]
         public Stream Stream { get; set; }
     }
 
     public class Stream
     {
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public string Url { get; set; }
-        
-        [JsonProperty("sessionid")]
+
+        [JsonPropertyName("sessionid")]
         public string SessionId { get; set; }
     }
 

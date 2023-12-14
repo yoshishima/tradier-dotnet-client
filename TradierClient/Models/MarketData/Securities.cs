@@ -1,33 +1,33 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Models.MarketData
 {
 
     public class SecuritiesRootobject
     {
-        [JsonProperty("securities")]
+        [JsonPropertyName("securities")]
         public Securities Securities { get; set; }
     }
 
     public class Securities
     {
-        [JsonProperty("security")]
+        [JsonPropertyName("security")]
         public List<Security> Security { get; set; }
     }
 
     public class Security
     {
-        [JsonProperty("symbol")]
+        [JsonPropertyName("symbol")]
         public string Symbol { get; set; }
 
-        [JsonProperty("exchange")]
+        [JsonPropertyName("exchange")]
         public string Exchange { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
     }
 

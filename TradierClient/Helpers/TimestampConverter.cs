@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
+using System.Text.Json;
+
 
 namespace Tradier.Client.Helpers
 {
-    public class TimestampConverter : Newtonsoft.Json.JsonConverter
+    public class TimestampConverter : System.Text.Json.Serialization.JsonConverter<DateTime>
     {
-        public override bool CanConvert(Type objectType)
+        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return objectType == typeof(DateTime);
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            var tt = reader.Value.ToString();
+            var tt = reader.GetString();
             var t = long.Parse(tt);
             return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(t).ToLocalTime();
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
