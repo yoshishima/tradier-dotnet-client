@@ -78,6 +78,13 @@ namespace Tradier.Client.Models.Account
         [JsonPropertyName("strategy")]
         public string Strategy { get; set; }
 
+        [JsonPropertyName("stop")]
+        public string Stop { get; set; }
+
+        [JsonPropertyName("tag")]
+        //Need to check 255 max with only ltetters, numbers and - supported
+        public string Tag { get; set; }
+
         [JsonPropertyName("leg")]
         public Leg[] Leg { get; set; }
     }
