@@ -18,6 +18,7 @@ namespace Tradier.Client.Models.MarketData
         public List<Datum> Data { get; set; }
     }
 
+
     public class Datum
     {
         [JsonPropertyName("time")]
@@ -30,6 +31,11 @@ namespace Tradier.Client.Models.MarketData
         [JsonPropertyName("price")]
         public float Price { get; set; }
 
+        /// Gets or sets the open value of an object.
+        /// The open value represents a float value indicating the opening value of an object.
+        /// @JsonPropertyName("open")
+        /// @return The open value of an object.
+        /// /
         [JsonPropertyName("open")]
         public float Open { get; set; }
 
@@ -39,6 +45,9 @@ namespace Tradier.Client.Models.MarketData
         [JsonPropertyName("low")]
         public float Low { get; set; }
 
+        /// <summary>
+        /// Gets or sets the Close property.
+        /// </summary>
         [JsonPropertyName("close")]
         public float Close { get; set; }
 

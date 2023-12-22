@@ -6,13 +6,33 @@ using Tradier.Client.Helpers;
 namespace Tradier.Client
 {
     /// <summary>
-    /// The <c>TradierClient</c> class
+    /// The <c>TradierClient</c> class.
     /// </summary>
     public class TradierClient
     {
+        /// <summary>
+        /// Gets or sets the authentication information for the property.
+        /// </summary>
+        /// <value>
+        /// The authentication information.
+        /// </value>
         public Authentication Authentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Account property.
+        /// </summary>
+        /// <remarks>
+        /// Represents the account associated with an entity.
+        /// </remarks>
         public Account Account { get; set; }
         public MarketData MarketData { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Trading property.
+        /// </summary>
+        /// <value>
+        /// The Trading property.
+        /// </value>
         public Trading Trading { get; set; }
         public WatchlistEndpoint Watchlist { get; set; }
 

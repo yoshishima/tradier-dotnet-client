@@ -8,23 +8,29 @@ using Tradier.Client.Models.Authentication;
 namespace Tradier.Client
 {
     /// <summary>
-    /// The <c>Authentication</c> class
+    /// Represents an authentication class that allows obtaining and refreshing access tokens.
     /// </summary>
     public class Authentication
     {
-        private readonly Requests _requests;
-        
         /// <summary>
-        /// The Authentication constructor
+        /// Represents a private variable of type `Requests` used within the current class.
         /// </summary>
+        private readonly Requests _requests;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Authentication"/> class.
+        /// </summary>
+        /// <param name="requests">The <see cref="Requests"/> object used for making API requests.</param>
         public Authentication(Requests requests)
         {
             _requests = requests;
         }
 
         /// <summary>
-        /// You can obtain an access token by exchanging an authorization code
+        /// You can obtain an access token by exchanging an authorization code.
         /// </summary>
+        /// <param name="code">The authorization code to exchange for an access token.</param>
+        /// <returns>A Task object that represents the asynchronous operation. The result of the Task is a Token object containing the access token.</returns>
         public async Task<Token> CreateAccessToken(string code)
         {
             var data = new Dictionary<string, string>
@@ -38,8 +44,10 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// You will obtain a refresh token in the same response as an access token
+        /// Refreshes the access token using the provided refresh token.
         /// </summary>
+        /// <param name="refreshToken">The refresh token to use for obtaining a new access token.</param>
+        /// <returns>The new access token.</returns>
         public async Task<Token> RefreshAccessToken(string refreshToken)
         {
             var data = new Dictionary<string, string>

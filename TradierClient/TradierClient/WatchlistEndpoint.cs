@@ -11,23 +11,28 @@ using Tradier.Client.Models.Watchlist;
 namespace Tradier.Client
 {
     /// <summary>
-    /// The <c>Watchlist</c> class
+    /// The <c>WatchlistEndpoint</c> class provides methods to interact with the watchlist API.
     /// </summary>
     public class WatchlistEndpoint
     {
+        /// <summary>
+        /// Represents a class that handles requests.
+        /// </summary>
         private readonly Requests _requests;
 
         /// <summary>
-        /// The Watchlist constructor
+        /// Initializes a new instance of the WatchlistEndpoint class.
         /// </summary>
+        /// <param name="requests">The Requests object for handling API requests.</param>
         public WatchlistEndpoint(Requests requests)
         {
             _requests = requests;
         }
 
         /// <summary>
-        /// Retrieve all of a users watchlists
+        /// Retrieve all of a user's watchlists.
         /// </summary>
+        /// <returns>A Task that represents the asynchronous operation. The task result contains a Watchlists object.</returns>
         public async Task<Watchlists> GetWatchlists()
         {
             var response = await _requests.GetRequest("watchlists");
@@ -35,8 +40,10 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieve a specific watchlist by id
+        /// Retrieve a specific watchlist by id.
         /// </summary>
+        /// <param name="watchlistId">The id of the watchlist to retrieve.</param>
+        /// <returns>The watchlist object.</returns>
         public async Task<Watchlist> GetWatchlist(string watchlistId)
         {
             var response = await _requests.GetRequest($"watchlists/{watchlistId}");
@@ -44,8 +51,13 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Create a new watchlist
+        /// Create a new watchlist.
         /// </summary>
+        /// <param name="name">The name of the watchlist.</param>
+        /// <param name="symbols">A comma-separated string of symbols to be added to the watchlist.</param>
+        /// <returns>
+        /// The newly created watchlist.
+        /// </returns>
         public async Task<Watchlist> CreateWatchlist(string name, string symbols)
         {
             List<string> listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
@@ -53,8 +65,11 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Create a new watchlist
+        /// Create a new watchlist.
         /// </summary>
+        /// <param name="name">The name of the watchlist.</param>
+        /// <param name="symbols">The symbols to be added to the watchlist.</param>
+        /// <returns>A Task with the created Watchlist object.</returns>
         public async Task<Watchlist> CreateWatchlist(string name, List<string> symbols)
         {
             string strSymbols = String.Join(",", symbols);
@@ -71,6 +86,12 @@ namespace Tradier.Client
         /// <summary>
         /// Update an existing watchlist
         /// </summary>
+        /// <param name="watchlistId">The ID of the watchlist to be updated</param>
+        /// <param name="name">The new name for the watchlist</param>
+        /// <param name="symbols">Optional. A comma-separated list of symbols to be added to the watchlist</param>
+        /// <returns>
+        /// An updated Watchlist object.
+        /// </returns>
         public async Task<Watchlist> UpdateWatchlist(string watchlistId, string name, string symbols = "")
         {
             List<string> listSymbols = symbols?.Split(',').Select(x => x.Trim()).ToList();
@@ -78,8 +99,12 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Update an existing watchlist
+        /// Update an existing watchlist.
         /// </summary>
+        /// <param name="watchlistId">The ID of the watchlist to be updated.</param>
+        /// <param name="name">The new name for the watchlist.</param>
+        /// <param name="symbols">Optional. The symbols to be added to the watchlist. If null, the symbol list will not be updated.</param>
+        /// <returns>The updated watchlist.</returns>
         public async Task<Watchlist> UpdateWatchlist(string watchlistId, string name, List<string> symbols = null)
         {
             string strSymbols = String.Join(",", symbols);
@@ -94,8 +119,10 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Delete a specific watchlist
+        /// Deletes a specific watchlist.
         /// </summary>
+        /// <param name="watchlistId">The ID of the watchlist to delete.</param>
+        /// <returns>The updated list of watchlists.</returns>
         public async Task<Watchlists> DeleteWatchlist(string watchlistId)
         {
             var response = await _requests.DeleteRequest($"watchlists/{watchlistId}");
@@ -103,8 +130,13 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Add symbols to an existing watchlist. If the symbol exists, it will be over-written
+        /// Adds symbols to an existing watchlist.
         /// </summary>
+        /// <param name="watchlistId">The ID of the watchlist.</param>
+        /// <param name="symbols">A comma-separated string of symbols to be added.</param>
+        /// <returns>
+        /// An updated instance of the watchlist after symbols have been added.
+        /// </returns>
         public async Task<Watchlist> AddSymbolsToWatchlist(string watchlistId, string symbols)
         {
             List<string> listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
@@ -112,8 +144,11 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Add symbols to an existing watchlist. If the symbol exists, it will be over-written
+        /// Add symbols to an existing watchlist. If the symbol exists, it will be over-written.
         /// </summary>
+        /// <param name="watchlistId">The ID of the target watchlist.</param>
+        /// <param name="symbols">The list of symbols to be added.</param>
+        /// <returns>The updated watchlist after adding the symbols.</returns>
         public async Task<Watchlist> AddSymbolsToWatchlist(string watchlistId, List<string> symbols)
         {
             string strSymbols = String.Join(",", symbols);
@@ -127,8 +162,14 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Remove a symbol from a specific watchlist
+        /// Removes a symbol from a specific watchlist.
         /// </summary>
+        /// <param name="watchlistId">The ID of the watchlist from which the symbol should be removed.</param>
+        /// <param name="symbol">The symbol to be removed from the watchlist.</param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation.
+        /// The task result is a <see cref="Watchlist"/> object representing the updated watchlist after removing the symbol.
+        /// </returns>
         public async Task<Watchlist> RemoveSymbolFromWatchlist(string watchlistId, string symbol)
         {
             var response = await _requests.DeleteRequest($"watchlists/{watchlistId}/symbols/{symbol}");

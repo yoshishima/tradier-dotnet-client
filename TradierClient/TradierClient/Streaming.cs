@@ -11,8 +11,9 @@ namespace Tradier.Client
         private readonly Requests _requests;
 
         /// <summary>
-        /// The Streaming constructor
+        /// Initializes a new instance of the Streaming class.
         /// </summary>
+        /// <param name="requests">The requests object to use for streaming.</param>
         public Streaming(Requests requests)
         {
             _requests = requests;
