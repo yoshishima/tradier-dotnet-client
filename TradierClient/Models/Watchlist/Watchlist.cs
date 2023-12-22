@@ -5,12 +5,12 @@ using Tradier.Client.Helpers;
 namespace Tradier.Client.Models.Watchlist
 {
     /// <summary>
-    /// Represents the root object for watchlists data.
+    ///     Represents the root object for watchlists data.
     /// </summary>
     public class WatchlistsRootobject
     {
         /// <summary>
-        /// Represents a collection of watchlists.
+        ///     Represents a collection of watchlists.
         /// </summary>
         [JsonPropertyName("watchlists")]
         public Watchlists Watchlists { get; set; }
@@ -21,22 +21,22 @@ namespace Tradier.Client.Models.Watchlist
     public class WatchlistRootobject
     {
         /// <summary>
-        /// Gets or sets the watchlist property.
+        ///     Gets or sets the watchlist property.
         /// </summary>
         /// <value>
-        /// The watchlist.
+        ///     The watchlist.
         /// </value>
         [JsonPropertyName("watchlist")]
         public Watchlist Watchlist { get; set; }
     }
 
     /// <summary>
-    /// Represents a collection of watchlists.
+    ///     Represents a collection of watchlists.
     /// </summary>
     public class Watchlists
     {
         /// <summary>
-        /// Represents a list of watchlist items.
+        ///     Represents a list of watchlist items.
         /// </summary>
         [JsonPropertyName("watchlist")]
         [JsonConverter(typeof(SingleOrArrayConverter<Watchlist>))]
@@ -44,48 +44,48 @@ namespace Tradier.Client.Models.Watchlist
     }
 
     /// <summary>
-    /// Represents a watchlist.
+    ///     Represents a watchlist.
     /// </summary>
     public class Watchlist
     {
         /// <summary>
-        /// Gets or sets the name property.
+        ///     Gets or sets the name property.
         /// </summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of the property Id.
+        ///     Gets or sets the value of the property Id.
         /// </summary>
         /// <value>
-        /// The value of the property Id.
+        ///     The value of the property Id.
         /// </value>
         [JsonPropertyName("id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the public identifier.
+        ///     Gets or sets the public identifier.
         /// </summary>
         /// <value>
-        /// The public identifier.
+        ///     The public identifier.
         /// </value>
         [JsonPropertyName("public_id")]
         public string PublicId { get; set; }
 
         /// <summary>
-        /// Represents the Items property.
+        ///     Represents the Items property.
         /// </summary>
         [JsonPropertyName("items")]
         public Items Items { get; set; }
     }
 
     /// <summary>
-    /// Represents a collection of items.
+    ///     Represents a collection of items.
     /// </summary>
     public class Items
     {
         /// <summary>
-        /// Represents a property named "Item" that is a list of <see cref="Item"/>.
+        ///     Represents a property named "Item" that is a list of <see cref="Item" />.
         /// </summary>
         [JsonPropertyName("item")]
         [JsonConverter(typeof(SingleOrArrayConverter<Item>))]
@@ -93,21 +93,21 @@ namespace Tradier.Client.Models.Watchlist
     }
 
     /// <summary>
-    /// Represents an item with symbol and ID.
+    ///     Represents an item with symbol and ID.
     /// </summary>
     public class Item
     {
         /// <summary>
-        /// Gets or sets the symbol.
+        ///     Gets or sets the symbol.
         /// </summary>
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; }
 
         /// <summary>
-        /// Gets or sets the Id property for the given object.
+        ///     Gets or sets the Id property for the given object.
         /// </summary>
         /// <value>
-        /// The Id property.
+        ///     The Id property.
         /// </value>
         [JsonPropertyName("id")]
         public string Id { get; set; }

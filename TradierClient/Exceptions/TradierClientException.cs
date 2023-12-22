@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Tradier.Client.Models.Exception;
 
 namespace Tradier.Client.Exceptions
@@ -14,20 +13,19 @@ namespace Tradier.Client.Exceptions
         }
 
         public TradierClientException(string message)
-        : base(message)
+            : base(message)
         {
         }
 
         public TradierClientException(HttpResponseMessage response)
         {
-            Task<string> resp = response.Content.ReadAsStringAsync();
+            var resp = response.Content.ReadAsStringAsync();
             if (!string.IsNullOrEmpty(resp.Result))
             {
                 if (Equals(response.Content.Headers.ContentType, MediaTypeHeaderValue.Parse("application/json")))
                 {
-                    Fault fault = JsonSerializer.Deserialize<FaultRootobject>(resp.Result).Fault;
+                    var fault = JsonSerializer.Deserialize<FaultRootobject>(resp.Result).Fault;
                     throw new TradierClientException(fault, response);
-
                 }
 
                 throw new TradierClientException(resp.Result);
@@ -44,18 +42,18 @@ namespace Tradier.Client.Exceptions
         }
 
         public TradierClientException(string message, Exception innerException)
-        : base(message, innerException)
+            : base(message, innerException)
         {
         }
 
         private string responseBuilder(HttpResponseMessage response, Fault fault = null)
         {
             var messageStream = response.Content.ReadAsStreamAsync().Result;
-            var messageField = (fault != null ? fault.FaultString : messageStream.ToString());
-            string messageBuilt = $"IsSuccessStatusCode: {response.IsSuccessStatusCode}\n" +
-                             $"Reason: {response.ReasonPhrase}\n" +
-                             $"StatusCode: {response.StatusCode.ToString()}\n" +
-                             $"Message: {messageField}";
+            var messageField = fault != null ? fault.FaultString : messageStream.ToString();
+            var messageBuilt = $"IsSuccessStatusCode: {response.IsSuccessStatusCode}\n" +
+                               $"Reason: {response.ReasonPhrase}\n" +
+                               $"StatusCode: {response.StatusCode.ToString()}\n" +
+                               $"Message: {messageField}";
 
             return messageBuilt;
         }

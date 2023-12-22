@@ -20,10 +20,7 @@ namespace Tradier.Client.Helpers
             using var request = new HttpRequestMessage(method, uri);
             using var response = await _httpClient.SendAsync(request);
             {
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new TradierClientException(response);
-                }
+                if (!response.IsSuccessStatusCode) throw new TradierClientException(response);
 
                 var content = await response.Content.ReadAsStringAsync();
                 content = content.Replace("\"null\"", "null");
@@ -51,10 +48,7 @@ namespace Tradier.Client.Helpers
         {
             using var response = await _httpClient.PutAsync(uri, new FormUrlEncodedContent(values));
             {
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new TradierClientException(response);
-                }
+                if (!response.IsSuccessStatusCode) throw new TradierClientException(response);
 
                 var content = await response.Content.ReadAsStringAsync();
                 content = content.Replace("\"null\"", "null");
@@ -65,12 +59,10 @@ namespace Tradier.Client.Helpers
 
         public async Task<string> PostRequest(string uri, Dictionary<string, string> values = null)
         {
-            using var response = await _httpClient.PostAsync(uri, values == null ? null : new FormUrlEncodedContent(values));
+            using var response =
+                await _httpClient.PostAsync(uri, values == null ? null : new FormUrlEncodedContent(values));
             {
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new TradierClientException(response);
-                }
+                if (!response.IsSuccessStatusCode) throw new TradierClientException(response);
 
                 var content = await response.Content.ReadAsStringAsync();
                 content = content.Replace("\"null\"", "null");
@@ -78,6 +70,5 @@ namespace Tradier.Client.Helpers
                 return content;
             }
         }
-
     }
 }

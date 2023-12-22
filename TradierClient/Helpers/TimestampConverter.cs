@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text.Json;
-
+using System.Text.Json.Serialization;
 
 namespace Tradier.Client.Helpers
 {
-    public class TimestampConverter : System.Text.Json.Serialization.JsonConverter<DateTime>
+    public class TimestampConverter : JsonConverter<DateTime>
     {
         public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

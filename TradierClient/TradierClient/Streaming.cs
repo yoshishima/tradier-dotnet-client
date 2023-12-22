@@ -4,14 +4,14 @@
 namespace Tradier.Client
 {
     /// <summary>
-    /// The <c>Streaming</c> class
+    ///     The <c>Streaming</c> class
     /// </summary>
     public class Streaming
     {
         private readonly Requests _requests;
 
         /// <summary>
-        /// Initializes a new instance of the Streaming class.
+        ///     Initializes a new instance of the Streaming class.
         /// </summary>
         /// <param name="requests">The requests object to use for streaming.</param>
         public Streaming(Requests requests)

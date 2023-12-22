@@ -6,51 +6,27 @@ using Tradier.Client.Helpers;
 namespace Tradier.Client
 {
     /// <summary>
-    /// The <c>TradierClient</c> class.
+    ///     The <c>TradierClient</c> class.
     /// </summary>
     public class TradierClient
     {
-        /// <summary>
-        /// Gets or sets the authentication information for the property.
-        /// </summary>
-        /// <value>
-        /// The authentication information.
-        /// </value>
-        public Authentication Authentication { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Account property.
-        /// </summary>
-        /// <remarks>
-        /// Represents the account associated with an entity.
-        /// </remarks>
-        public Account Account { get; set; }
-        public MarketData MarketData { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Trading property.
-        /// </summary>
-        /// <value>
-        /// The Trading property.
-        /// </value>
-        public Trading Trading { get; set; }
-        public WatchlistEndpoint Watchlist { get; set; }
-
         // TODO: Coming soon
         //public Streaming Streaming { get; set; }
 
         /// <summary>
-        /// The TradierClient constructor (with an existing HttpClient)
+        ///     The TradierClient constructor (with an existing HttpClient)
         /// </summary>
-        public TradierClient(HttpClient httpClient, string apiToken, string defaultAccountNumber = null, bool useProduction = false)
+        public TradierClient(HttpClient httpClient, string apiToken, string defaultAccountNumber = null,
+            bool useProduction = false)
         {
-            Uri baseEndpoint = useProduction ? new Uri(Settings.PRODUCTION_ENDPOINT) : new Uri(Settings.SANDBOX_ENDPOINT);
+            var baseEndpoint =
+                useProduction ? new Uri(Settings.PRODUCTION_ENDPOINT) : new Uri(Settings.SANDBOX_ENDPOINT);
 
             httpClient.BaseAddress = baseEndpoint;
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
 
-            Requests request = new Requests(httpClient);
+            var request = new Requests(httpClient);
 
             Authentication = new Authentication(request);
             Account = new Account(request, defaultAccountNumber);
@@ -63,19 +39,47 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// The TradierClient constructor (with no HttpClient passed)
+        ///     The TradierClient constructor (with no HttpClient passed)
         /// </summary>
         public TradierClient(string apiToken, string defaultAccountNumber, bool useProduction = false)
-           : this(new HttpClient(), apiToken, defaultAccountNumber, useProduction)
+            : this(new HttpClient(), apiToken, defaultAccountNumber, useProduction)
         {
         }
 
         /// <summary>
-        /// The TradierClient constructor (with no HttpClient and no defaultAccount passed)
+        ///     The TradierClient constructor (with no HttpClient and no defaultAccount passed)
         /// </summary>
         public TradierClient(string apiToken, bool useProduction = false)
-           : this(new HttpClient(), apiToken, null, useProduction)
+            : this(new HttpClient(), apiToken, null, useProduction)
         {
         }
+
+        /// <summary>
+        ///     Gets or sets the authentication information for the property.
+        /// </summary>
+        /// <value>
+        ///     The authentication information.
+        /// </value>
+        public Authentication Authentication { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the Account property.
+        /// </summary>
+        /// <remarks>
+        ///     Represents the account associated with an entity.
+        /// </remarks>
+        public Account Account { get; set; }
+
+        public MarketData MarketData { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the Trading property.
+        /// </summary>
+        /// <value>
+        ///     The Trading property.
+        /// </value>
+        public Trading Trading { get; set; }
+
+        public WatchlistEndpoint Watchlist { get; set; }
     }
 }

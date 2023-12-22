@@ -3,39 +3,38 @@
 namespace Tradier.Client.Models.Streaming
 {
     /// <summary>
-    /// Represents a root object for streaming.
+    ///     Represents a root object for streaming.
     /// </summary>
     public class StreamRootobject
     {
         /// <summary>
-        /// Gets or sets the stream property.
+        ///     Gets or sets the stream property.
         /// </summary>
         [JsonPropertyName("stream")]
         public Stream Stream { get; set; }
     }
 
     /// <summary>
-    /// Represents a stream object that contains the URL and session ID.
+    ///     Represents a stream object that contains the URL and session ID.
     /// </summary>
     public class Stream
     {
         /// <summary>
-        /// Gets or sets the URL.
+        ///     Gets or sets the URL.
         /// </summary>
         [JsonPropertyName("url")]
         public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets the SessionId property.
+        ///     Gets or sets the SessionId property.
         /// </summary>
         /// <value>
-        /// The SessionId property specifies the unique identifier for a session.
+        ///     The SessionId property specifies the unique identifier for a session.
         /// </value>
         /// <remarks>
-        /// This property represents the session ID that is used to identify a specific session in the application.
+        ///     This property represents the session ID that is used to identify a specific session in the application.
         /// </remarks>
         [JsonPropertyName("sessionid")]
         public string SessionId { get; set; }
     }
-
 }
