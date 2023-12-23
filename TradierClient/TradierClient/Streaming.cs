@@ -1,4 +1,8 @@
-﻿using Tradier.Client.Helpers;
+﻿using System.Text.Json;
+using System.Threading.Tasks;
+using System;
+using Tradier.Client.Helpers;
+using Tradier.Client.Models.Streaming;
 
 // ReSharper disable once CheckNamespace
 namespace Tradier.Client
@@ -19,12 +23,14 @@ namespace Tradier.Client
             _requests = requests;
         }
 
-        // TODO: Coming soon
-        //public async Task<Stream> CreateMarketSession()
-        //{
-        //    var response = await _requests.PostRequest($"markets/events/session");
-        //    return JsonConvert.DeserializeObject<StreamRootobject>(response).Stream;
-        //}
+
+        public async Task<String> CreateMarketSession()
+        {
+            var response =
+                await _requests.GetRequest(
+                    $"v1/markets/events/session");
+            return JsonSerializer.Deserialize<Stream>(response).SessionId;
+        }
 
         // TODO: Coming soon
         //public async Task<StreamResponse> GetStreamingQuotes(string sessionid, string symbols, string filter, bool lineBreak, bool validOnly, bool advancedDetails)
