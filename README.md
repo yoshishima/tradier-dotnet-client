@@ -1,7 +1,7 @@
 [![NuGet](https://img.shields.io/nuget/v/tradier-dotnet-client.svg)](https://www.nuget.org/packages/tradier-dotnet-client/) ![Tradier .NET Client - Deploy](https://github.com/vitali-karmanov/tradier-dotnet-client/workflows/Tradier%20.NET%20Client%20-%20Deploy/badge.svg) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
-# Not Testing: Moving to .NET 8.0 and switched from NewtonSoft to System.Text.Json
+# Not Tested: Moving to .NET 8.0 and switched from NewtonSoft to System.Text.Json
 # Tradier .NET Client 
 
 Tradier .NET Client is a .NET Library for the [Tradier API](https://documentation.tradier.com/) to interact with the Tradier Brokerage platform to get account information, market data, place orders, and create watchlists. 
