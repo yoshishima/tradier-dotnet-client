@@ -4,35 +4,38 @@ using System.Text.Json.Serialization;
 namespace Tradier.Client.Models.MarketData
 {
     /// <summary>
-    /// Represents the root object for option symbols.
+    ///     Represents the root object for option symbols.
     /// </summary>
     public class OptionSymbolsRootobject
     {
         /// <summary>
-        /// Gets or sets the list of symbols.
+        ///     Gets or sets the list of symbols.
         /// </summary>
         /// <value>
-        /// The list of symbols.
+        ///     The list of symbols.
         /// </value>
-        [JsonPropertyName("symbols")] public List<Symbol> Symbols { get; set; }
+        [JsonPropertyName("symbols")]
+        public List<Symbol> Symbols { get; set; }
     }
 
     /// <summary>
-    /// Represents a symbol.
+    ///     Represents a symbol.
     /// </summary>
     public class Symbol
     {
         /// <summary>
-        /// Gets or sets the root symbol property.
+        ///     Gets or sets the root symbol property.
         /// </summary>
-        [JsonPropertyName("rootSymbol")] public string RootSymbol { get; set; }
+        [JsonPropertyName("rootSymbol")]
+        public string RootSymbol { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of options.
+        ///     Gets or sets the list of options.
         /// </summary>
         /// <value>
-        /// The list of options.
+        ///     The list of options.
         /// </value>
-        [JsonPropertyName("options")] public List<string> Options { get; set; }
+        [JsonPropertyName("options")]
+        public List<string> Options { get; set; }
     }
 }

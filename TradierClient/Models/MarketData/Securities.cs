@@ -4,60 +4,66 @@ using System.Text.Json.Serialization;
 namespace Tradier.Client.Models.MarketData
 {
     /// <summary>
-    /// Represents the root object for securities.
+    ///     Represents the root object for securities.
     /// </summary>
     public class SecuritiesRootobject
     {
         /// <summary>
-        /// Gets or sets the securities.
+        ///     Gets or sets the securities.
         /// </summary>
         /// <value>
-        /// The securities.
+        ///     The securities.
         /// </value>
-        [JsonPropertyName("securities")] public Securities Securities { get; set; }
+        [JsonPropertyName("securities")]
+        public Securities Securities { get; set; }
     }
 
     /// <summary>
-    /// Represents a collection of securities.
+    ///     Represents a collection of securities.
     /// </summary>
     public class Securities
     {
         /// <summary>
-        /// Gets or sets the list of securities.
+        ///     Gets or sets the list of securities.
         /// </summary>
-        [JsonPropertyName("security")] public List<Security> Security { get; set; }
+        [JsonPropertyName("security")]
+        public List<Security> Security { get; set; }
     }
 
     /// <summary>
-    /// Represents a security.
+    ///     Represents a security.
     /// </summary>
     public class Security
     {
         /// <summary>
-        /// Gets or sets the symbol property.
+        ///     Gets or sets the symbol property.
         /// </summary>
         /// <value>
-        /// The symbol.
+        ///     The symbol.
         /// </value>
-        [JsonPropertyName("symbol")] public string Symbol { get; set; }
+        [JsonPropertyName("symbol")]
+        public string Symbol { get; set; }
 
         /// <summary>
-        /// Getter and setter for the Exchange property.
+        ///     Getter and setter for the Exchange property.
         /// </summary>
         /// <value>The value of the Exchange property.</value>
-        [JsonPropertyName("exchange")] public string Exchange { get; set; }
+        [JsonPropertyName("exchange")]
+        public string Exchange { get; set; }
 
         /// <summary>
-        /// Gets or sets the Type property.
+        ///     Gets or sets the Type property.
         /// </summary>
         /// <value>
-        /// The type of the property.
+        ///     The type of the property.
         /// </value>
-        [JsonPropertyName("type")] public string Type { get; set; }
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the description.
+        ///     Gets or sets the description.
         /// </summary>
-        [JsonPropertyName("description")] public string Description { get; set; }
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 }

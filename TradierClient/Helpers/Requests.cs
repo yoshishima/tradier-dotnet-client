@@ -7,18 +7,18 @@ using Tradier.Client.Exceptions;
 namespace Tradier.Client.Helpers
 {
     /// <summary>
-    /// Class for making HTTP requests using HttpClient.
+    ///     Class for making HTTP requests using HttpClient.
     /// </summary>
     public class Requests
     {
         /// <summary>
-        /// The <see cref="_httpClient"/> is a private readonly instance of <see cref="HttpClient"/> class.
-        /// It is used to send HTTP requests and receive HTTP responses from a specified URI.
+        ///     The <see cref="_httpClient" /> is a private readonly instance of <see cref="HttpClient" /> class.
+        ///     It is used to send HTTP requests and receive HTTP responses from a specified URI.
         /// </summary>
         private readonly HttpClient _httpClient;
 
         /// <summary>
-        /// Initializes a new instance of the Requests class with the specified HttpClient.
+        ///     Initializes a new instance of the Requests class with the specified HttpClient.
         /// </summary>
         /// <param name="httpClient">The HttpClient object to use for making HTTP requests.</param>
         public Requests(HttpClient httpClient)
@@ -27,7 +27,7 @@ namespace Tradier.Client.Helpers
         }
 
         /// <summary>
-        /// Send an asynchronous HTTP request to the specified URI using the specified HTTP method.
+        ///     Send an asynchronous HTTP request to the specified URI using the specified HTTP method.
         /// </summary>
         /// <param name="uri">The URI of the request.</param>
         /// <param name="method">The HTTP method to use.</param>
@@ -47,7 +47,7 @@ namespace Tradier.Client.Helpers
         }
 
         /// <summary>
-        /// Sends an HTTP GET request to the specified URI.
+        ///     Sends an HTTP GET request to the specified URI.
         /// </summary>
         /// <param name="uri">The URI to which the request is sent.</param>
         /// <returns>A task representing the asynchronous operation that returns the response content as a string.</returns>
@@ -57,7 +57,7 @@ namespace Tradier.Client.Helpers
         }
 
         /// <summary>
-        /// Send a GET request to the specified URI and returns the response as a string.
+        ///     Send a GET request to the specified URI and returns the response as a string.
         /// </summary>
         /// <param name="uri">The URI of the resource to request.</param>
         /// <returns>The response from the GET request as a string.</returns>
@@ -67,7 +67,7 @@ namespace Tradier.Client.Helpers
         }
 
         /// <summary>
-        /// Sends a DELETE request to the specified URI and returns the response as a string.
+        ///     Sends a DELETE request to the specified URI and returns the response as a string.
         /// </summary>
         /// <param name="uri">The URI to send the request to.</param>
         /// <returns>A Task containing the response string.</returns>
@@ -77,13 +77,13 @@ namespace Tradier.Client.Helpers
         }
 
         /// <summary>
-        /// Send a PUT request to the specified URI with the given values.
+        ///     Send a PUT request to the specified URI with the given values.
         /// </summary>
         /// <param name="uri">The URI to send the request to.</param>
         /// <param name="values">The values to include in the request body.</param>
         /// <returns>
-        /// A task representing the asynchronous operation. The task result contains the
-        /// response content as a string.
+        ///     A task representing the asynchronous operation. The task result contains the
+        ///     response content as a string.
         /// </returns>
         public async Task<string> PutRequest(string uri, Dictionary<string, string> values)
         {
@@ -99,12 +99,12 @@ namespace Tradier.Client.Helpers
         }
 
         /// <summary>
-        /// Sends a POST request to the specified URI with the given values.
+        ///     Sends a POST request to the specified URI with the given values.
         /// </summary>
         /// <param name="uri">The URI to send the request to.</param>
         /// <param name="values">The dictionary containing the values to include in the request.</param>
         /// <returns>
-        /// A <see cref="Task{TResult}"/> representing the async operation that returns the response content as a string.
+        ///     A <see cref="Task{TResult}" /> representing the async operation that returns the response content as a string.
         /// </returns>
         /// <exception cref="TradierClientException">Thrown if the response is not a success status code.</exception>
         public async Task<string> PostRequest(string uri, Dictionary<string, string> values = null)
