@@ -10,9 +10,6 @@ namespace Tradier.Client
     /// </summary>
     public class TradierClient
     {
-        // TODO: Coming soon
-        //public Streaming Streaming { get; set; }
-
         /// <summary>
         ///     The TradierClient constructor (with an existing HttpClient)
         /// </summary>
@@ -35,7 +32,7 @@ namespace Tradier.Client
             Watchlist = new WatchlistEndpoint(request);
 
             // TODO: Coming soon
-            //Streaming = new Streaming(request);
+            Streaming = new Streaming(request);
         }
 
         /// <summary>
@@ -54,6 +51,9 @@ namespace Tradier.Client
         {
         }
 
+        // TODO: Coming soon
+        public Streaming Streaming { get; set; }
+
         /// <summary>
         ///     Gets or sets the authentication information for the property.
         /// </summary>
@@ -71,6 +71,7 @@ namespace Tradier.Client
         public Account Account { get; set; }
 
         public MarketData MarketData { get; set; }
+
 
         /// <summary>
         ///     Gets or sets the Trading property.
