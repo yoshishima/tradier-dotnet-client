@@ -10,10 +10,13 @@ using Tradier.Client.Models.Streaming;
 namespace Tradier.Client
 {
     /// <summary>
-    ///     The <c>Streaming</c> class
+    ///     The <c>Streaming</c> class provides methods for streaming data from a server using WebSocket.
     /// </summary>
     public class Streaming
     {
+        /// <summary>
+        ///     Private member variable for handling requests.
+        /// </summary>
         private readonly Requests _requests;
 
         /// <summary>
@@ -26,6 +29,10 @@ namespace Tradier.Client
         }
 
 
+        /// <summary>
+        ///     Calls the /v1/markets/events/session endpoint to retrieve a streaming token.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation. The task result represents the streaming token as a Stream.</returns>
         public async Task<Stream> GetStreamingToken()
         {
             var response =
@@ -34,6 +41,13 @@ namespace Tradier.Client
             return JsonSerializer.Deserialize<StreamRootobject>(response).Stream;
         }
 
+        /// <summary>
+        ///     Establishes a WebSocket connection to the specified URL using the provided session ID and symbol list.
+        /// </summary>
+        /// <param name="url">The URL to connect to.</param>
+        /// <param name="sessionid">The session ID used for authorization.</param>
+        /// <param name="symbolList">The list of symbols to be sent as parameters.</param>
+        /// <returns>A <see cref="Task" /> representing the asynchronous operation.</returns>
         public async Task EstablishWebSocket(string url, string sessionid, string symbolList)
         {
             using (var webSocket = new ClientWebSocket())
@@ -44,20 +58,21 @@ namespace Tradier.Client
                 Console.WriteLine(url);
                 Console.WriteLine(sessionid);
 
-                // Connect
                 await webSocket.ConnectAsync(new Uri(url), CancellationToken.None);
-                Console.WriteLine("Connected!");
 
-                // Send parameters if required (as per server requirement)
-                //string parameters = "{\"symbols\": [\"SPY231220C00462000\",\"SPY\",\"MSFT\"], \"sessionid\": \"" + token + "\", \"linebreak\": false, \"advancedDetails\": false}";
                 var parameters = symbolList;
                 await Send(webSocket, parameters);
 
-                // Example to receive messages
                 await Receive(webSocket);
             }
         }
 
+        /// <summary>
+        ///     Sends the provided parameters to the specified ClientWebSocket instance.
+        /// </summary>
+        /// <param name="webSocket">The ClientWebSocket instance to send the data to.</param>
+        /// <param name="parameters">The parameters to be sent.</param>
+        /// <returns>A Task representing the asynchronous Send operation.</returns>
         private static async Task Send(ClientWebSocket webSocket, string parameters)
         {
             var bytes = Encoding.UTF8.GetBytes(parameters);
@@ -66,6 +81,11 @@ namespace Tradier.Client
             Console.WriteLine("Sent data: " + parameters);
         }
 
+        /// <summary>
+        ///     Receives messages from the WebSocket and handles the close message.
+        /// </summary>
+        /// <param name="webSocket">The WebSocket object to receive messages from.</param>
+        /// <returns>A Task representing the asynchronous operation.</returns>
         private static async Task Receive(ClientWebSocket webSocket)
         {
             var buffer = new byte[1024 * 4];
@@ -86,8 +106,24 @@ namespace Tradier.Client
         }
 
 
+        /// <summary>
+        ///     The JsonBuilder class provides a static method for building a JSON string from provided parameters.
+        /// </summary>
         public class JsonBuilder
         {
+            /// <summary>
+            ///     Builds a JSON string by serializing the given input parameters.
+            /// </summary>
+            /// <param name="symbols">An array of strings representing symbols.</param>
+            /// <param name="sessionID">A string representing the session ID.</param>
+            /// <param name="filters">An array of strings representing filters.</param>
+            /// <param name="linebreak">A boolean value indicating whether linebreaks should be included in the JSON string.</param>
+            /// <param name="validOnly">A boolean value indicating whether only valid elements should be included in the JSON string.</param>
+            /// <param name="advancedDetails">
+            ///     A boolean value indicating whether advanced details should be included in the JSON
+            ///     string.
+            /// </param>
+            /// <returns>A string representing the JSON serialized object.</returns>
             public static string BuildJsonString(string[] symbols, string sessionID, string[] filters, bool linebreak,
                 bool validOnly, bool advancedDetails)
             {
@@ -104,11 +140,5 @@ namespace Tradier.Client
                 return JsonSerializer.Serialize(jsonObject);
             }
         }
-        // TODO: Coming soon
-        //public async Task<StreamResponse> GetStreamingQuotes(string sessionid, string symbols, string filter, bool lineBreak, bool validOnly, bool advancedDetails)
-        //{
-        //    var response = await _requests.GetRequest($"markets/events?sessionid={sessionid}&symbols={symbols}&linebreak={lineBreak}&validOnly={validOnly}&advancedDetails={advancedDetails}");
-        //    return JsonConvert.DeserializeObject<StreamResponse>(response);
-        //}
     }
 }

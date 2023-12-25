@@ -33,6 +33,7 @@ namespace Tradier.Client
 
             // TODO: Coming soon
             Streaming = new Streaming(request);
+            Fundamentals = new Fundamentals(request);
         }
 
         /// <summary>
@@ -53,6 +54,8 @@ namespace Tradier.Client
 
         // TODO: Coming soon
         public Streaming Streaming { get; set; }
+
+        public Fundamentals Fundamentals { get; set; }
 
         /// <summary>
         ///     Gets or sets the authentication information for the property.

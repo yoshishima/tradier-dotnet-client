@@ -345,5 +345,7 @@ namespace Tradier.Client.Models.MarketData
         /// </value>
         [JsonPropertyName("root_symbol")]
         public string RootSymbol { get; set; }
+
+        [JsonPropertyName("greeks")] public Greeks Greeks { get; set; }
     }
 }

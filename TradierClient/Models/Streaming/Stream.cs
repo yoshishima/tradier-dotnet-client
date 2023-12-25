@@ -10,6 +10,9 @@ namespace Tradier.Client.Models.Streaming
         /// <summary>
         ///     Gets or sets the stream property.
         /// </summary>
+        /// <value>
+        ///     The stream property.
+        /// </value>
         [JsonPropertyName("stream")]
         public Stream Stream { get; set; }
     }
@@ -22,6 +25,9 @@ namespace Tradier.Client.Models.Streaming
         /// <summary>
         ///     Gets or sets the URL.
         /// </summary>
+        /// <value>
+        ///     The URL.
+        /// </value>
         [JsonPropertyName("url")]
         public string Url { get; set; }
 
