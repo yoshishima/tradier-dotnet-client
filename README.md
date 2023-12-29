@@ -6,7 +6,7 @@
 
 Tradier .NET Client is a .NET Library for the [Tradier API](https://documentation.tradier.com/) to interact with the Tradier Brokerage platform to get account information, market data, place orders, and create watchlists. 
 
-In order to use this client you will need to have an Access Token from Tradier for either the [Developer Sandbox](https://developer.tradier.com/user/sign_up) or the [Brokerage Account](https://documentation.tradier.com/brokerage-api).
+In order to use this client, you will need to have an Access Token from Tradier for either the [Developer Sandbox](https://developer.tradier.com/user/sign_up) or the [Brokerage Account](https://documentation.tradier.com/brokerage-api).
 
 ## Include the Client
 
@@ -37,7 +37,7 @@ Also, you can instantiate a new client with a default account number. To do so i
 ```csharp
 TradierClient client = new TradierClient("<TOKEN>", "<ACCOUNT_NUMBER>");
 ```
-**On an important note**, the client's constructor default setting is to use the Developer Sandbox. To set the client to Brokerage Account, you need to explicitly set it to Production by including the property `useProduction` and set it to true:
+**On an important note**, the client's default constructor default setting is the Developer Sandbox. To set the client to Brokerage Account, you need to explicitly set it to Production by including the property `useProduction` and set it to true:
 
 ```csharp
 // Constructor with token and using production endpoints
@@ -55,7 +55,7 @@ TradierClient clientWithDefaultAcc = new TradierClient("<TOKEN>", "<ACCOUNT_NUMB
 
 ## Use the Client
 
-The client is separated into different sections and follows the [API documentation](https://documentation.tradier.com/) outline. Below are described all the supported API calls for each section. For more information refer to [Wiki](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki).
+The client is separated into sections and follows the [API documentation](https://documentation.tradier.com/) outline. Below are described all the supported API calls for each section. For more information, refer to [Wiki](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki).
 
 ### [Account](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Account-methods)
 ```csharp
@@ -115,6 +115,13 @@ Watchlist removeSymbolFromWatchlist = await client.Watchlist.RemoveSymbolFromWat
 Watchlists deleteWatclist = await client.Watchlist.DeleteWatchlist(newWatchlist.Id);
 ```
 
+### [Fundamentals](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Fundamentals-methods)
+
+```csharp
+List<CompanyInfo> companyInfo = await client.Fundamentals.GetCompanyInformation("CHPT");
+```
+
+
 <br/>
 <div align="right">
     <b><a href="#tradier-net-client">↥ back to top</a></b>
@@ -128,7 +135,7 @@ Watchlists deleteWatclist = await client.Watchlist.DeleteWatchlist(newWatchlist.
 
 ## Disclaimer
 
-This Wrapper is NOT an official .NET Tradier Library. This library is provided "as is" without expressed or implied warranty of any kind. Please use at your own risk and discretion.
+This Wrapper is NOT an official .NET Tradier Library. This library is provided "as is" without expressed or implied warranty. Please use it at your own risk and discretion.
 
 ## License
 This Library is provided under the Apache 2.0 License - see the [LICENSE](https://github.com/vitali-karmanov/tradier-dotnet-client/blob/master/LICENSE) file for details
