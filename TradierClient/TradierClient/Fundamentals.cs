@@ -5,7 +5,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Tradier.Client.Helpers;
 using Tradier.Client.Models.Fundamentals;
-using Tradier.Client.Models.Dividends;
 
 
 
@@ -58,30 +57,154 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves a list of dividend data for the provided symbols.
+        /// Retrieves dividend information for the specified symbols.
         /// </summary>
-        /// <param name="symbols">A comma-separated string of symbols for which dividend data should be retrieved.</param>
-        /// <returns>
-        /// A list of dividend data for the provided symbols.
-        /// </returns>
-        public async Task<List<Dividends>> GetDividend(string symbols)
+        /// <param name="symbols">A comma-separated list of symbols.</param>
+        /// <returns>A list of dividend data for the provided symbols.</returns>
+        public async Task<List<DividendsRootObject>> GetDividends(string symbols)
         {
             var listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
-            return await GetDividend(listSymbols);
+            return await GetDividends(listSymbols);
         }
 
         /// <summary>
-        /// Retrieves dividend data for a list of symbols.
+        /// Retrieves dividend information for the specified symbols.
         /// </summary>
-        /// <param name="symbols">A comma-separated list of symbols.</param>
-        /// <returns>A task representing the asynchronous operation that returns a list of dividend data.</returns>
-        public async Task<List<Dividends>> GetDividend(List<string> symbols)
+        /// <param name="symbols">A list of symbols.</param>
+        /// <returns>A list of dividend data for the provided symbols.</returns>
+        public async Task<List<DividendsRootObject>> GetDividends(List<string> symbols)
         {
             var strSymbols = string.Join(",", symbols).Trim();
 
             var response = await _requests.GetRequest($"/beta/markets/fundamentals/dividends?symbols={strSymbols}");
 
-            return JsonSerializer.Deserialize<List<Dividends>>(response);
+            return JsonSerializer.Deserialize<List<DividendsRootObject>>(response);
+        }
+
+
+        /// <summary>
+        /// Retrieves company statistics for the provided symbols.
+        /// </summary>
+        /// <param name="symbols">A comma-separated list of symbols.</param>
+        /// <returns>A list of company statistics.</returns>
+        public async Task<List<StatisticsResult>> GetCompanyStatistics(string symbols)
+        {
+            var listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
+            return await GetCompanyStatistics(listSymbols);
+        }
+
+        /// <summary>
+        /// Retrieves company statistics for the provided symbols.
+        /// </summary>
+        /// <param name="symbols">A list of symbols.</param>
+        /// <returns>A list of company statistics.</returns>
+        public async Task<List<StatisticsResult>> GetCompanyStatistics(List<string> symbols)
+        {
+            var strSymbols = string.Join(",", symbols).Trim();
+
+            var response = await _requests.GetRequest($"markets/fundamentals/statistics?symbols={strSymbols}");
+
+            return JsonSerializer.Deserialize<List<StatisticsResult>>(response);
+        }
+
+        /// <summary>
+        /// Retrieves financial statements (income statements, balance sheets, cash flow statements) for the specified symbols.
+        /// </summary>
+        /// <param name="symbols">A comma-separated list of symbols.</param>
+        /// <returns>A list of financial statement data for the provided symbols.</returns>
+        public async Task<List<FinancialsRootObject>> GetFinancials(string symbols)
+        {
+            var listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
+            return await GetFinancials(listSymbols);
+        }
+
+        /// <summary>
+        /// Retrieves financial statements (income statements, balance sheets, cash flow statements) for the specified symbols.
+        /// </summary>
+        /// <param name="symbols">A list of symbols.</param>
+        /// <returns>A list of financial statement data for the provided symbols.</returns>
+        public async Task<List<FinancialsRootObject>> GetFinancials(List<string> symbols)
+        {
+            var strSymbols = string.Join(",", symbols).Trim();
+
+            var response = await _requests.GetRequest($"/beta/markets/fundamentals/financials?symbols={strSymbols}");
+
+            return JsonSerializer.Deserialize<List<FinancialsRootObject>>(response);
+        }
+
+        /// <summary>
+        /// Retrieves financial ratios for the specified symbols.
+        /// </summary>
+        /// <param name="symbols">A comma-separated list of symbols.</param>
+        /// <returns>A list of financial ratio data for the provided symbols.</returns>
+        public async Task<List<RatiosRootObject>> GetRatios(string symbols)
+        {
+            var listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
+            return await GetRatios(listSymbols);
+        }
+
+        /// <summary>
+        /// Retrieves financial ratios for the specified symbols.
+        /// </summary>
+        /// <param name="symbols">A list of symbols.</param>
+        /// <returns>A list of financial ratio data for the provided symbols.</returns>
+        public async Task<List<RatiosRootObject>> GetRatios(List<string> symbols)
+        {
+            var strSymbols = string.Join(",", symbols).Trim();
+
+            var response = await _requests.GetRequest($"/beta/markets/fundamentals/ratios?symbols={strSymbols}");
+
+            return JsonSerializer.Deserialize<List<RatiosRootObject>>(response);
+        }
+
+        /// <summary>
+        /// Retrieves corporate actions for the specified symbols.
+        /// </summary>
+        /// <param name="symbols">A comma-separated list of symbols.</param>
+        /// <returns>A list of corporate action data for the provided symbols.</returns>
+        public async Task<List<CorporateActionsRootObject>> GetCorporateActions(string symbols)
+        {
+            var listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
+            return await GetCorporateActions(listSymbols);
+        }
+
+        /// <summary>
+        /// Retrieves corporate actions for the specified symbols.
+        /// </summary>
+        /// <param name="symbols">A list of symbols.</param>
+        /// <returns>A list of corporate action data for the provided symbols.</returns>
+        public async Task<List<CorporateActionsRootObject>> GetCorporateActions(List<string> symbols)
+        {
+            var strSymbols = string.Join(",", symbols).Trim();
+
+            var response = await _requests.GetRequest($"/beta/markets/fundamentals/corporate_actions?symbols={strSymbols}");
+
+            return JsonSerializer.Deserialize<List<CorporateActionsRootObject>>(response);
+        }
+
+        /// <summary>
+        /// Retrieves corporate calendars for the specified symbols.
+        /// </summary>
+        /// <param name="symbols">A comma-separated list of symbols.</param>
+        /// <returns>A list of corporate calendar data for the provided symbols.</returns>
+        public async Task<List<CorporateCalendarsRootObject>> GetCorporateCalendars(string symbols)
+        {
+            var listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
+            return await GetCorporateCalendars(listSymbols);
+        }
+
+        /// <summary>
+        /// Retrieves corporate calendars for the specified symbols.
+        /// </summary>
+        /// <param name="symbols">A list of symbols.</param>
+        /// <returns>A list of corporate calendar data for the provided symbols.</returns>
+        public async Task<List<CorporateCalendarsRootObject>> GetCorporateCalendars(List<string> symbols)
+        {
+            var strSymbols = string.Join(",", symbols).Trim();
+
+            var response = await _requests.GetRequest($"/beta/markets/fundamentals/calendars?symbols={strSymbols}");
+
+            return JsonSerializer.Deserialize<List<CorporateCalendarsRootObject>>(response);
         }
     }
 }
