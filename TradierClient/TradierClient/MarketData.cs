@@ -71,11 +71,10 @@ namespace Tradier.Client
         /// <param name="includeAllRoots">Optional. Specifies whether to include all root symbols or not.</param>
         /// <param name="strikes">Optional. Specifies whether to include strikes or not.</param>
         /// <returns>An instance of the Expirations class that contains the expiration dates for the specified options.</returns>
-        public async Task<Expirations> GetOptionExpirations(string symbol, bool? includeAllRoots = false,
-            bool? strikes = false)
+        public async Task<Expirations> GetOptionExpirations(string symbol, bool includeAllRoots = false, bool strikes = false)
         {
             var response = await _requests.GetRequest(
-                $"markets/options/expirations?symbol={symbol}&includeAllRoots={includeAllRoots}&strikes={strikes}");
+                $"markets/options/expirations?symbol={symbol}&includeAllRoots={includeAllRoots.ToString().ToLower()}&strikes={strikes.ToString().ToLower()}");
             return JsonSerializer.Deserialize<OptionExpirationsRootobject>(response).Expirations;
         }
 
@@ -106,43 +105,51 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        ///     Get historical pricing for a security.
+        /// Get historical pricing for a security.
         /// </summary>
         /// <param name="symbol">The symbol of the security.</param>
-        /// <param name="interval">The interval of the quotes.</param>
-        /// <param name="start">The start date of the historical quotes.</param>
-        /// <param name="end">The end date of the historical quotes.</param>
+        /// <param name="interval">The interval of the quotes (daily, weekly, monthly).</param>
+        /// <param name="start">The start date of the historical quotes (yyyy-MM-dd).</param>
+        /// <param name="end">The end date of the historical quotes (yyyy-MM-dd).</param>
+        /// <param name="sessionFilter">The session filter (optional): 'open', 'all', null (for all sessions).</param>
         /// <param name="culture">The culture info used to parse the date strings (optional, default: en-US).</param>
         /// <returns>
-        ///     The historical quotes for the specified parameters.
+        /// The historical quotes for the specified parameters.
         /// </returns>
         public async Task<HistoricalQuotes> GetHistoricalQuotes(string symbol, string interval, string start,
-            string end, CultureInfo culture = null)
+            string end, string sessionFilter = null, CultureInfo culture = null)
         {
             culture ??= new CultureInfo("en-US");
             var startDateTime = DateTime.Parse(start, culture);
             var endDateTime = DateTime.Parse(end, culture);
 
-            return await GetHistoricalQuotes(symbol, interval, startDateTime, endDateTime);
+            return await GetHistoricalQuotes(symbol, interval, startDateTime, endDateTime, sessionFilter);
         }
 
         /// <summary>
-        ///     Get historical pricing for a security
+        /// Get historical pricing for a security
         /// </summary>
         /// <param name="symbol">The symbol of the security</param>
-        /// <param name="interval">The interval of pricing data (e.g., "1d" for daily, "1w" for weekly)</param>
+        /// <param name="interval">The interval of pricing data (daily, weekly, monthly)</param>
         /// <param name="start">The start date of the historical data</param>
         /// <param name="end">The end date of the historical data</param>
+        /// <param name="sessionFilter">The session filter (optional): 'open', 'all', null (for all sessions)</param>
         /// <returns>The historical quotes for the specified security and time range</returns>
         public async Task<HistoricalQuotes> GetHistoricalQuotes(string symbol, string interval, DateTime start,
-            DateTime end)
+            DateTime end, string sessionFilter = null)
         {
             var stringStart = start.ToString("yyyy-MM-dd");
             var stringEnd = end.ToString("yyyy-MM-dd");
 
-            var response =
-                await _requests.GetRequest(
-                    $"markets/history?symbol={symbol}&interval={interval}&start={stringStart}&end={stringEnd}");
+            var requestUrl = $"markets/history?symbol={symbol}&interval={interval}&start={stringStart}&end={stringEnd}";
+
+            // Add session filter parameter if provided
+            if (!string.IsNullOrEmpty(sessionFilter))
+            {
+                requestUrl += $"&session_filter={sessionFilter}";
+            }
+
+            var response = await _requests.GetRequest(requestUrl);
             return JsonSerializer.Deserialize<HistoricalQuotesRootobject>(response).History;
         }
 

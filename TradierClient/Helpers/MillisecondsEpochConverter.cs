@@ -46,14 +46,8 @@ public class MillisecondsEpochConverter : JsonConverter<DateTime>
     /// </exception>
     public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
     {
-        try
-        {
-            var milliseconds = (long)(value.ToUniversalTime() - _epoch).TotalMilliseconds;
-            writer.WriteNumberValue(milliseconds);
-        }
-        catch (Exception ex)
-        {
-            throw new JsonException("Error converting DateTime to milliseconds", ex);
-        }
+        var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        var seconds = Convert.ToInt64((value.ToUniversalTime() - epoch).TotalSeconds);
+        writer.WriteStringValue(seconds.ToString());
     }
 }

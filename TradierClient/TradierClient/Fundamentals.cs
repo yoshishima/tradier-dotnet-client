@@ -80,7 +80,6 @@ namespace Tradier.Client
             var strSymbols = string.Join(",", symbols).Trim();
 
             var response = await _requests.GetRequest($"/beta/markets/fundamentals/dividends?symbols={strSymbols}");
-            //Console.WriteLine(response);
 
             return JsonSerializer.Deserialize<List<Dividends>>(response);
         }
