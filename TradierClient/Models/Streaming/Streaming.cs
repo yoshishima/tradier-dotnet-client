@@ -14,13 +14,13 @@ namespace Tradier.Client.Models.Streaming
         ///     The stream property.
         /// </value>
         [JsonPropertyName("stream")]
-        public Stream Stream { get; set; }
+        public Streaming Stream { get; set; }
     }
 
     /// <summary>
     ///     Represents a stream object that contains the URL and session ID.
     /// </summary>
-    public class Stream
+    public class Streaming
     {
         /// <summary>
         ///     Gets or sets the URL.

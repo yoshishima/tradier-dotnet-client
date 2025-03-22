@@ -1,144 +1,214 @@
-﻿using System;
-using System.Net.WebSockets;
-using System.Text;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using Tradier.Client.Helpers;
-using Tradier.Client.Models.Streaming;
+﻿using System.Text.Json.Serialization;
 
-namespace Tradier.Client
+namespace Tradier.Client.Models.Streaming
 {
     /// <summary>
-    ///     The <c>Streaming</c> class provides methods for streaming data from a server using WebSocket.
+    ///     Represents a response from the account streaming service.
     /// </summary>
-    public class Streaming
+    public class AccountStreamResponse
     {
         /// <summary>
-        ///     Private member variable for handling requests.
+        ///     Gets or sets the type of account event.
         /// </summary>
-        private readonly Requests _requests;
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
 
         /// <summary>
-        ///     Initializes a new instance of the Streaming class.
+        ///     Gets or sets the event details.
         /// </summary>
-        /// <param name="requests">The requests object to use for streaming.</param>
-        public Streaming(Requests requests)
-        {
-            _requests = requests;
-        }
+        [JsonPropertyName("event")]
+        public AccountEvent Event { get; set; }
+    }
 
+    /// <summary>
+    ///     Represents various types of account events.
+    /// </summary>
+    public class AccountEvent
+    {
+        /// <summary>
+        ///     Gets or sets the order event information.
+        /// </summary>
+        [JsonPropertyName("order")]
+        public OrderEvent Order { get; set; }
 
         /// <summary>
-        ///     Calls the /v1/markets/events/session endpoint to retrieve a streaming token.
+        ///     Gets or sets the trade event information.
         /// </summary>
-        /// <returns>A task representing the asynchronous operation. The task result represents the streaming token as a Stream.</returns>
-        public async Task<Stream> GetStreamingToken()
-        {
-            var response =
-                await _requests.PostRequest(
-                    "/v1/markets/events/session");
-            return JsonSerializer.Deserialize<StreamRootobject>(response).Stream;
-        }
+        [JsonPropertyName("trade")]
+        public TradeEvent Trade { get; set; }
+    }
+
+    /// <summary>
+    ///     Represents an order event in the account stream.
+    /// </summary>
+    public class OrderEvent
+    {
+        /// <summary>
+        ///     Gets or sets the order ID.
+        /// </summary>
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
 
         /// <summary>
-        ///     Establishes a WebSocket connection to the specified URL using the provided session ID and symbol list.
+        ///     Gets or sets the account ID.
         /// </summary>
-        /// <param name="url">The URL to connect to.</param>
-        /// <param name="sessionid">The session ID used for authorization.</param>
-        /// <param name="symbolList">The list of symbols to be sent as parameters.</param>
-        /// <returns>A <see cref="Task" /> representing the asynchronous operation.</returns>
-        public async Task EstablishWebSocket(string url, string sessionid, string symbolList)
-        {
-            using (var webSocket = new ClientWebSocket())
-            {
-                // Add your headers (e.g., Authorization header)
-                webSocket.Options.SetRequestHeader("Authorization", $"Bearer {sessionid}");
-
-                Console.WriteLine(url);
-                Console.WriteLine(sessionid);
-
-                await webSocket.ConnectAsync(new Uri(url), CancellationToken.None);
-
-                var parameters = symbolList;
-                await Send(webSocket, parameters);
-
-                await Receive(webSocket);
-            }
-        }
+        [JsonPropertyName("account_id")]
+        public string AccountId { get; set; }
 
         /// <summary>
-        ///     Sends the provided parameters to the specified ClientWebSocket instance.
+        ///     Gets or sets the status of the order.
         /// </summary>
-        /// <param name="webSocket">The ClientWebSocket instance to send the data to.</param>
-        /// <param name="parameters">The parameters to be sent.</param>
-        /// <returns>A Task representing the asynchronous Send operation.</returns>
-        private static async Task Send(ClientWebSocket webSocket, string parameters)
-        {
-            var bytes = Encoding.UTF8.GetBytes(parameters);
-            await webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true,
-                CancellationToken.None);
-            Console.WriteLine("Sent data: " + parameters);
-        }
+        [JsonPropertyName("status")]
+        public string Status { get; set; }
 
         /// <summary>
-        ///     Receives messages from the WebSocket and handles the close message.
+        ///     Gets or sets the symbol associated with the order.
         /// </summary>
-        /// <param name="webSocket">The WebSocket object to receive messages from.</param>
-        /// <returns>A Task representing the asynchronous operation.</returns>
-        private static async Task Receive(ClientWebSocket webSocket)
-        {
-            var buffer = new byte[1024 * 4];
-            while (webSocket.State == WebSocketState.Open)
-            {
-                var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                Console.WriteLine(message);
-
-                // Handle close message
-                if (result.MessageType == WebSocketMessageType.Close)
-                {
-                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty,
-                        CancellationToken.None);
-                    Console.WriteLine("WebSocket connection closed.");
-                }
-            }
-        }
-
+        [JsonPropertyName("symbol")]
+        public string Symbol { get; set; }
 
         /// <summary>
-        ///     The JsonBuilder class provides a static method for building a JSON string from provided parameters.
+        ///     Gets or sets the order side (buy/sell).
         /// </summary>
-        public class JsonBuilder
-        {
-            /// <summary>
-            ///     Builds a JSON string by serializing the given input parameters.
-            /// </summary>
-            /// <param name="symbols">An array of strings representing symbols.</param>
-            /// <param name="sessionID">A string representing the session ID.</param>
-            /// <param name="filters">An array of strings representing filters.</param>
-            /// <param name="linebreak">A boolean value indicating whether linebreaks should be included in the JSON string.</param>
-            /// <param name="validOnly">A boolean value indicating whether only valid elements should be included in the JSON string.</param>
-            /// <param name="advancedDetails">
-            ///     A boolean value indicating whether advanced details should be included in the JSON
-            ///     string.
-            /// </param>
-            /// <returns>A string representing the JSON serialized object.</returns>
-            public static string BuildJsonString(string[] symbols, string sessionID, string[] filters, bool linebreak,
-                bool validOnly, bool advancedDetails)
-            {
-                var jsonObject = new
-                {
-                    symbols,
-                    sessionid = sessionID,
-                    filter = filters,
-                    linebreak,
-                    validOnly,
-                    advancedDetails
-                };
+        [JsonPropertyName("side")]
+        public string Side { get; set; }
 
-                return JsonSerializer.Serialize(jsonObject);
-            }
-        }
+        /// <summary>
+        ///     Gets or sets the order quantity.
+        /// </summary>
+        [JsonPropertyName("quantity")]
+        public int Quantity { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the order type.
+        /// </summary>
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the execution price.
+        /// </summary>
+        [JsonPropertyName("price")]
+        public float? Price { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the average fill price.
+        /// </summary>
+        [JsonPropertyName("avg_fill_price")]
+        public float? AvgFillPrice { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the executed quantity.
+        /// </summary>
+        [JsonPropertyName("exec_quantity")]
+        public int? ExecQuantity { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the last filled price.
+        /// </summary>
+        [JsonPropertyName("last_fill_price")]
+        public float? LastFillPrice { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the last filled quantity.
+        /// </summary>
+        [JsonPropertyName("last_fill_quantity")]
+        public int? LastFillQuantity { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the remaining quantity.
+        /// </summary>
+        [JsonPropertyName("remaining_quantity")]
+        public int? RemainingQuantity { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the time the order was created.
+        /// </summary>
+        [JsonPropertyName("create_date")]
+        public string CreateDate { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the transaction date.
+        /// </summary>
+        [JsonPropertyName("transaction_date")]
+        public string TransactionDate { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the class of the order.
+        /// </summary>
+        [JsonPropertyName("class")]
+        public string Class { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the option symbol if applicable.
+        /// </summary>
+        [JsonPropertyName("option_symbol")]
+        public string OptionSymbol { get; set; }
+    }
+
+    /// <summary>
+    ///     Represents a trade execution event in the account stream.
+    /// </summary>
+    public class TradeEvent
+    {
+        /// <summary>
+        ///     Gets or sets the order ID.
+        /// </summary>
+        [JsonPropertyName("order_id")]
+        public int OrderId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the account ID.
+        /// </summary>
+        [JsonPropertyName("account_id")]
+        public string AccountId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the symbol traded.
+        /// </summary>
+        [JsonPropertyName("symbol")]
+        public string Symbol { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the side of the trade (buy/sell).
+        /// </summary>
+        [JsonPropertyName("side")]
+        public string Side { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the quantity traded.
+        /// </summary>
+        [JsonPropertyName("quantity")]
+        public int Quantity { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the execution price.
+        /// </summary>
+        [JsonPropertyName("price")]
+        public float Price { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the execution ID.
+        /// </summary>
+        [JsonPropertyName("exec_id")]
+        public string ExecId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the execution time.
+        /// </summary>
+        [JsonPropertyName("exec_time")]
+        public string ExecTime { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the commission charged.
+        /// </summary>
+        [JsonPropertyName("commission")]
+        public float? Commission { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the option symbol if applicable.
+        /// </summary>
+        [JsonPropertyName("option_symbol")]
+        public string OptionSymbol { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -119,6 +118,112 @@ namespace TradierClient.Test.Tests
         {
             var result = await _client.MarketData.LookupSymbol(query);
             ClassicAssert.IsNotNull(result.Security.FirstOrDefault()?.Symbol);
+        }
+
+        [Test]
+        [TestCase("AAPL")]
+        public async Task GetQuotesTest(string symbol)
+        {
+            var result = await _client.MarketData.GetQuotes(symbol);
+            ClassicAssert.IsNotNull(result.Quote.FirstOrDefault());
+            ClassicAssert.AreEqual(symbol, result.Quote.First().Symbol);
+        }
+
+        [Test]
+        [TestCase("AAPL")]
+        public async Task GetOptionExpirations(string symbol)
+        {
+            var result = await _client.MarketData.GetOptionExpirations(symbol);
+            ClassicAssert.IsNotNull(result.Date);
+            ClassicAssert.Greater(result.Date.Count, 0);
+        }
+
+        [Test]
+        public async Task GetClockTest()
+        {
+            var result = await _client.MarketData.GetClock();
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.IsNotNull(result.Date);
+            ClassicAssert.IsNotNull(result.Description);
+            ClassicAssert.IsNotNull(result.State);
+        }
+
+        [Test]
+        public async Task GetCalendarTest()
+        {
+            var result = await _client.MarketData.GetCalendar(DateTime.Now.Month, DateTime.Now.Year);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual(DateTime.Now.Month, result.Month);
+            ClassicAssert.AreEqual(DateTime.Now.Year, result.Year);
+            ClassicAssert.IsNotNull(result.Days);
+        }
+
+        [Test]
+        [TestCase("AAPL")]
+        public async Task GetTimeSalesTest(string symbol)
+        {
+            var start = DateTime.Now.AddDays(-5);
+            var end = DateTime.Now;
+            var result = await _client.MarketData.GetTimeSales(symbol, "15min", start, end);
+            ClassicAssert.IsNotNull(result);
+            if (result.Data != null && result.Data.Any())
+            {
+                ClassicAssert.IsNotNull(result.Data.First().Time);
+                ClassicAssert.NotZero(result.Data.First().Price);
+            }
+        }
+
+        [Test]
+        [TestCase("AAPL", "C", "strike")]
+        public async Task LookupOptionSymbolsTest(string symbol)
+        {
+            var result = await _client.MarketData.LookupOptionSymbols(symbol);
+            ClassicAssert.IsNotNull(result);
+            // This test might need adjustment based on actual API behavior
+            // As option symbols availability depends on market conditions
+        }
+
+        [Test]
+        [TestCase("AAPL")]
+        public async Task GetStrikesTest(string symbol)
+        {
+            // Get the next expiration date first
+            var expirations = await _client.MarketData.GetOptionExpirations(symbol);
+            if (expirations.Date != null && expirations.Date.Any())
+            {
+                var expiration = expirations.Date.First();
+                var result = await _client.MarketData.GetStrikes(symbol, expiration);
+                ClassicAssert.IsNotNull(result);
+                ClassicAssert.IsNotNull(result.Strike);
+                ClassicAssert.Greater(result.Strike.Count, 0);
+            }
+            else
+            {
+                Assert.Inconclusive("No option expirations found for this symbol");
+            }
+        }
+
+        [Test]
+        [TestCase("AAPL")]
+        public async Task GetOptionChainTest(string symbol)
+        {
+            // Get the next expiration date first
+            var expirations = await _client.MarketData.GetOptionExpirations(symbol);
+            if (expirations.Date != null && expirations.Date.Any())
+            {
+                var expiration = expirations.Date.First();
+                var result = await _client.MarketData.GetOptionChain(symbol, expiration);
+                ClassicAssert.IsNotNull(result);
+                ClassicAssert.IsNotNull(result.Option);
+                if (result.Option.Any())
+                {
+                    ClassicAssert.AreEqual(symbol, result.Option.First().Underlying);
+                }
+            }
+            else
+            {
+                Assert.Inconclusive("No option expirations found for this symbol");
+            }
         }
     }
 }
