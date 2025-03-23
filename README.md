@@ -1,6 +1,4 @@
-
 # Tradier .NET Client
-
 
 A comprehensive .NET library for interacting with the [Tradier API](https://documentation.tradier.com/). This client enables you to access account information, retrieve market data, execute trades, and manage watchlists.
 
@@ -24,13 +22,13 @@ To use this client, you need an Access Token from Tradier, either for:
 Install the [NuGet package](https://www.nuget.org/packages/tradier-dotnet-client/) using the Package Manager Console:
 
 ```
-PM> Install-Package <>
+PM> Install-Package tradier-dotnet-client
 ```
 
 Or via the .NET CLI:
 
 ```
-dotnet add package <>
+dotnet add package tradier-dotnet-client
 ```
 
 ## Quick Start
@@ -182,6 +180,46 @@ var multilegOrder = await client.Trading.PlaceMultilegOrder(
     price: 2.50
 );
 
+// Place combo order (equity + option)
+var comboOrder = await client.Trading.PlaceComboOrder(
+    "SPY",
+    "limit",
+    "day",
+    new List<(string, string, int)> {
+        ("SPY", "buy", 100),
+        ("SPY230616P440000", "buy_to_open", 1)
+    },
+    price: 445.00
+);
+
+// Place one-triggers-other (OTO) order
+var otoOrder = await client.Trading.PlaceOtoOrder(
+    "day",
+    new List<(string, int, string, string, string, double?, double?)> {
+        ("AAPL", 100, "limit", "", "buy", 150.00, null),
+        ("AAPL", 100, "limit", "", "sell", 160.00, null)
+    }
+);
+
+// Place one-cancels-other (OCO) order
+var ocoOrder = await client.Trading.PlaceOcoOrder(
+    "day",
+    new List<(string, int, string, string, string, double?, double?)> {
+        ("AAPL", 100, "limit", "", "sell", 160.00, null),
+        ("AAPL", 100, "stop", "", "sell", null, 140.00)
+    }
+);
+
+// Place one-triggers-one-cancels-other (OTOCO) order
+var otocoOrder = await client.Trading.PlaceOtocoOrder(
+    "day",
+    new List<(string, int, string, string, string, double?, double?)> {
+        ("AAPL", 100, "limit", "", "buy", 150.00, null),
+        ("AAPL", 100, "limit", "", "sell", 160.00, null),
+        ("AAPL", 100, "stop", "", "sell", null, 140.00)
+    }
+);
+
 // Modify an order
 var modifiedOrder = await client.Trading.ModifyOrder(
     orderId,
@@ -252,6 +290,23 @@ var corporateActions = await client.Fundamentals.GetCorporateActions("AAPL");
 
 // Get corporate calendars
 var corporateCalendars = await client.Fundamentals.GetCorporateCalendars("AAPL");
+
+// Get company statistics
+var companyStats = await client.Fundamentals.GetCompanyStatistics("AAPL");
+```
+
+### Streaming 
+
+```csharp
+// Get streaming token
+var streamToken = await client.Streaming.GetStreamingToken();
+
+// Establish WebSocket connection
+await client.Streaming.EstablishWebSocket(
+    streamToken.Url,
+    streamToken.SessionId,
+    "AAPL,MSFT,SPY"
+);
 ```
 
 ## Error Handling
@@ -293,11 +348,10 @@ This project was forked from the work initially created by:
 * **[Henrique Tedeschi](https://github.com/htedeschi)**
 * **[Vitali Karmanov](https://github.com/vitali-karmanov)**
 
+## License
+
+This library is provided under the Apache 2.0 License - see the [LICENSE](https://github.com/yoshishima/tradier-dotnet-client/blob/master/LICENSE) file for details.
 
 ## Disclaimer
 
 This wrapper is NOT an official .NET Tradier Library. It's provided "as is" without expressed or implied warranty. Please use it at your own risk and discretion.
-
-## License
-
-This library is provided under the Apache 2.0 License - see the [LICENSE](https://github.com/vitali-karmanov/tradier-dotnet-client/blob/master/LICENSE) file for details.
