@@ -19,7 +19,7 @@ To use this client, you need an Access Token from Tradier, either for:
 
 ## Installation
 
-Install the [NuGet package](https://www.nuget.org/packages/tradier-dotnet-client/) using the Package Manager Console:
+<!-- Install the [NuGet package](https://www.nuget.org/packages/tradier-dotnet-client/) using the Package Manager Console:
 
 ```
 PM> Install-Package tradier-dotnet-client
@@ -30,7 +30,7 @@ Or via the .NET CLI:
 ```
 dotnet add package tradier-dotnet-client
 ```
-
+-->
 ## Quick Start
 
 ### Basic Initialization
