@@ -6,7 +6,7 @@
         <RootNamespace>Tradier.Client</RootNamespace>
         <PackageId>tradier-dotnet-client</PackageId>
         <Authors>Vitali Karmanov, Henrique Tedeschi</Authors>
-        <Company />
+        <Company/>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <PackageProjectUrl></PackageProjectUrl>
         <RepositoryUrl>https://github.com/vitali-karmanov/tradier-dotnet-client</RepositoryUrl>
@@ -23,7 +23,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="Models\Positions.cs~RF299977a.TMP" />
-        <None Remove="Models\Watchlist\Watchlist.cs~RF4c68ca51.TMP" />
+        <None Remove="Models\Positions.cs~RF299977a.TMP"/>
+        <None Remove="Models\Watchlist\Watchlist.cs~RF4c68ca51.TMP"/>
     </ItemGroup>
 </Project>

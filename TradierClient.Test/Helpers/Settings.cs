@@ -4,5 +4,6 @@
     {
         public string ApiToken { get; set; }
         public string SandboxApiToken { get; set; }
+        public string DefaultAccountNumber { get; set; }
     }
 }

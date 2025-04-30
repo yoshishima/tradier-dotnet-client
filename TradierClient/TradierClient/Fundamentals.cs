@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 using Tradier.Client.Helpers;
 using Tradier.Client.Models.Fundamentals;
 
-
-
 namespace Tradier.Client
 {
     /// <summary>
-    /// Provides methods for retrieving fundamental information about companies and dividends from Tradier API.
+    ///     Provides methods for retrieving fundamental information about companies and dividends from Tradier API.
     /// </summary>
     public class Fundamentals
     {
@@ -23,7 +21,8 @@ namespace Tradier.Client
         private readonly Requests _requests;
 
         /// <summary>
-        /// Represents the Fundamentals endpoint in the Tradier API, which provides access to company information and dividends.
+        ///     Represents the Fundamentals endpoint in the Tradier API, which provides access to company information and
+        ///     dividends.
         /// </summary>
         public Fundamentals(Requests requests)
         {
@@ -31,7 +30,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves company information for a given list of symbols.
+        ///     Retrieves company information for a given list of symbols.
         /// </summary>
         /// <param name="symbols">A comma-separated list of symbols.</param>
         /// <returns>A list of CompanyInfo objects containing the company information.</returns>
@@ -42,7 +41,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves company information for the given symbols.
+        ///     Retrieves company information for the given symbols.
         /// </summary>
         /// <param name="symbols">A comma-separated list of symbols.</param>
         /// <returns>A list of CompanyInfo objects representing the company information.</returns>
@@ -57,7 +56,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves dividend information for the specified symbols.
+        ///     Retrieves dividend information for the specified symbols.
         /// </summary>
         /// <param name="symbols">A comma-separated list of symbols.</param>
         /// <returns>A list of dividend data for the provided symbols.</returns>
@@ -68,7 +67,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves dividend information for the specified symbols.
+        ///     Retrieves dividend information for the specified symbols.
         /// </summary>
         /// <param name="symbols">A list of symbols.</param>
         /// <returns>A list of dividend data for the provided symbols.</returns>
@@ -83,7 +82,7 @@ namespace Tradier.Client
 
 
         /// <summary>
-        /// Retrieves company statistics for the provided symbols.
+        ///     Retrieves company statistics for the provided symbols.
         /// </summary>
         /// <param name="symbols">A comma-separated list of symbols.</param>
         /// <returns>A list of company statistics.</returns>
@@ -94,7 +93,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves company statistics for the provided symbols.
+        ///     Retrieves company statistics for the provided symbols.
         /// </summary>
         /// <param name="symbols">A list of symbols.</param>
         /// <returns>A list of company statistics.</returns>
@@ -108,7 +107,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves financial statements (income statements, balance sheets, cash flow statements) for the specified symbols.
+        ///     Retrieves financial statements (income statements, balance sheets, cash flow statements) for the specified symbols.
         /// </summary>
         /// <param name="symbols">A comma-separated list of symbols.</param>
         /// <returns>A list of financial statement data for the provided symbols.</returns>
@@ -119,7 +118,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves financial statements (income statements, balance sheets, cash flow statements) for the specified symbols.
+        ///     Retrieves financial statements (income statements, balance sheets, cash flow statements) for the specified symbols.
         /// </summary>
         /// <param name="symbols">A list of symbols.</param>
         /// <returns>A list of financial statement data for the provided symbols.</returns>
@@ -133,7 +132,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves financial ratios for the specified symbols.
+        ///     Retrieves financial ratios for the specified symbols.
         /// </summary>
         /// <param name="symbols">A comma-separated list of symbols.</param>
         /// <returns>A list of financial ratio data for the provided symbols.</returns>
@@ -144,7 +143,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves financial ratios for the specified symbols.
+        ///     Retrieves financial ratios for the specified symbols.
         /// </summary>
         /// <param name="symbols">A list of symbols.</param>
         /// <returns>A list of financial ratio data for the provided symbols.</returns>
@@ -158,7 +157,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves corporate actions for the specified symbols.
+        ///     Retrieves corporate actions for the specified symbols.
         /// </summary>
         /// <param name="symbols">A comma-separated list of symbols.</param>
         /// <returns>A list of corporate action data for the provided symbols.</returns>
@@ -169,7 +168,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves corporate actions for the specified symbols.
+        ///     Retrieves corporate actions for the specified symbols.
         /// </summary>
         /// <param name="symbols">A list of symbols.</param>
         /// <returns>A list of corporate action data for the provided symbols.</returns>
@@ -177,13 +176,14 @@ namespace Tradier.Client
         {
             var strSymbols = string.Join(",", symbols).Trim();
 
-            var response = await _requests.GetRequest($"/beta/markets/fundamentals/corporate_actions?symbols={strSymbols}");
+            var response =
+                await _requests.GetRequest($"/beta/markets/fundamentals/corporate_actions?symbols={strSymbols}");
 
             return JsonSerializer.Deserialize<List<CorporateActionsRootObject>>(response);
         }
 
         /// <summary>
-        /// Retrieves corporate calendars for the specified symbols.
+        ///     Retrieves corporate calendars for the specified symbols.
         /// </summary>
         /// <param name="symbols">A comma-separated list of symbols.</param>
         /// <returns>A list of corporate calendar data for the provided symbols.</returns>
@@ -194,7 +194,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Retrieves corporate calendars for the specified symbols.
+        ///     Retrieves corporate calendars for the specified symbols.
         /// </summary>
         /// <param name="symbols">A list of symbols.</param>
         /// <returns>A list of corporate calendar data for the provided symbols.</returns>

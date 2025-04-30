@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Tradier.Client.Exceptions;
@@ -37,11 +38,12 @@ namespace Tradier.Client.Helpers
             using var request = new HttpRequestMessage(method, uri);
             using var response = await _httpClient.SendAsync(request);
             {
-                if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
+                if (response.StatusCode == HttpStatusCode.TooManyRequests)
                 {
                     // Handle rate limiting
                     var retryAfter = response.Headers.RetryAfter?.Delta ?? TimeSpan.FromSeconds(60);
-                    throw new TradierClientException($"Rate limit exceeded. Retry after {retryAfter.TotalSeconds} seconds.");
+                    throw new TradierClientException(
+                        $"Rate limit exceeded. Retry after {retryAfter.TotalSeconds} seconds.");
                 }
 
                 if (!response.IsSuccessStatusCode) throw new TradierClientException(response);

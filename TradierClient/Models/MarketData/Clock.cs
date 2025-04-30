@@ -4,74 +4,56 @@ using Tradier.Client.Helpers;
 
 namespace Tradier.Client.Models.MarketData
 {
-    /// <summary>
-    ///     Represents a ClockRootobject that contains a Clock object.
-    /// </summary>
     public class ClockRootobject
     {
-        /// <summary>
-        ///     Represents a clock.
-        /// </summary>
-        [JsonPropertyName("clock")]
-        public Clock Clock { get; set; }
+        [JsonPropertyName("clock")] public Clock Clock { get; set; } = null!; // Initialize for nullability
     }
 
-    /// <summary>
-    ///     Represents a clock object with date, description, state, timestamp, next change, and next state properties.
-    /// </summary>
+    public enum MarketState
+    {
+        Unknown,
+        Open,
+        Closed,
+        PreMarket,
+        PostMarket
+    }
+
     public class Clock
     {
-        /// <summary>
-        ///     Gets or sets the date property.
-        /// </summary>
-        /// <value>
-        ///     The date as a string.
-        /// </value>
-        [JsonPropertyName("date")]
-        public string Date { get; set; }
+        // Could use a custom converter for "YYYY-MM-DD" format
+        [JsonPropertyName("date")] public string Date { get; set; } = string.Empty;
 
-        /// <summary>
-        ///     Gets or sets the description of the property.
-        /// </summary>
-        /// <value>The description.</value>
-        [JsonPropertyName("description")]
-        public string Description { get; set; }
+        [JsonPropertyName("description")] public string Description { get; set; } = string.Empty;
 
-        /// <summary>
-        ///     Gets or sets the state.
-        /// </summary>
-        /// <value>
-        ///     The state.
-        /// </value>
         [JsonPropertyName("state")]
-        public string State { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public MarketState State { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the timestamp.
-        /// </summary>
-        /// <value>
-        ///     The timestamp.
-        /// </value>
         [JsonPropertyName("timestamp")]
         [JsonConverter(typeof(TimestampConverter))]
         public DateTime Timestamp { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the NextChange property.
-        /// </summary>
-        /// <value>
-        ///     The value of the NextChange property.
-        /// </value>
-        [JsonPropertyName("next_change")]
-        public string NextChange { get; set; }
+        // Could use TimeOnly in .NET 6+ or custom converter
+        [JsonPropertyName("next_change")] public string NextChange { get; set; } = string.Empty;
 
-        /// <summary>
-        ///     Gets or sets the next state property.
-        /// </summary>
-        /// <value>
-        ///     The next state.
-        /// </value>
         [JsonPropertyName("next_state")]
-        public string NextState { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public MarketState NextState { get; set; }
+
+        // Helper methods for working with the time format
+        public TimeSpan? GetNextChangeAsTimeSpan()
+        {
+            if (TimeSpan.TryParse(NextChange, out var result))
+                return result;
+            return null;
+        }
+
+        // Helper method to get the date from string
+        public DateTime? GetDateAsDateTime()
+        {
+            if (DateTime.TryParse(Date, out var result))
+                return result;
+            return null;
+        }
     }
 }

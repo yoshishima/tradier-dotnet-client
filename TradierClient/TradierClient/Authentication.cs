@@ -8,31 +8,30 @@ using Tradier.Client.Models.Authentication;
 namespace Tradier.Client
 {
     /// <summary>
-    ///     Represents an authentication class that allows obtaining and refreshing access tokens.
+    /// Represents an authentication class that enables handling user authentication,
+    /// including obtaining and refreshing access tokens for API usage.
     /// </summary>
     public class Authentication
     {
         /// <summary>
-        ///     Represents a private variable of type `Requests` used within the current class.
+        /// Represents a private field of type `Requests` used for making HTTP requests within the `Authentication` class.
         /// </summary>
         private readonly Requests _requests;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Authentication" /> class.
+        /// Represents a class that provides authentication-related operations such as obtaining and refreshing access tokens.
         /// </summary>
-        /// <param name="requests">The <see cref="Requests" /> object used for making API requests.</param>
         public Authentication(Requests requests)
         {
             _requests = requests;
         }
 
         /// <summary>
-        ///     You can obtain an access token by exchanging an authorization code.
+        /// Obtains an access token by exchanging an authorization code.
         /// </summary>
         /// <param name="code">The authorization code to exchange for an access token.</param>
         /// <returns>
-        ///     A Task object that represents the asynchronous operation. The result of the Task is a Token object containing
-        ///     the access token.
+        /// A Task that represents the asynchronous operation. The result contains a <see cref="Token" /> object with the access token details.
         /// </returns>
         public async Task<Token> CreateAccessToken(string code)
         {
@@ -47,10 +46,10 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        ///     Refreshes the access token using the provided refresh token.
+        /// Refreshes the access token using the provided refresh token.
         /// </summary>
         /// <param name="refreshToken">The refresh token to use for obtaining a new access token.</param>
-        /// <returns>The new access token.</returns>
+        /// <returns>A <see cref="Token" /> object containing the new access token and related information.</returns>
         public async Task<Token> RefreshAccessToken(string refreshToken)
         {
             var data = new Dictionary<string, string>

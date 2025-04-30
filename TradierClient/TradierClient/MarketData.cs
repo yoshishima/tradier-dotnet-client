@@ -71,7 +71,8 @@ namespace Tradier.Client
         /// <param name="includeAllRoots">Optional. Specifies whether to include all root symbols or not.</param>
         /// <param name="strikes">Optional. Specifies whether to include strikes or not.</param>
         /// <returns>An instance of the Expirations class that contains the expiration dates for the specified options.</returns>
-        public async Task<Expirations> GetOptionExpirations(string symbol, bool includeAllRoots = false, bool strikes = false)
+        public async Task<Expirations> GetOptionExpirations(string symbol, bool includeAllRoots = false,
+            bool strikes = false)
         {
             var response = await _requests.GetRequest(
                 $"markets/options/expirations?symbol={symbol}&includeAllRoots={includeAllRoots.ToString().ToLower()}&strikes={strikes.ToString().ToLower()}");
@@ -105,7 +106,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Get historical pricing for a security.
+        ///     Get historical pricing for a security.
         /// </summary>
         /// <param name="symbol">The symbol of the security.</param>
         /// <param name="interval">The interval of the quotes (daily, weekly, monthly).</param>
@@ -114,7 +115,7 @@ namespace Tradier.Client
         /// <param name="sessionFilter">The session filter (optional): 'open', 'all', null (for all sessions).</param>
         /// <param name="culture">The culture info used to parse the date strings (optional, default: en-US).</param>
         /// <returns>
-        /// The historical quotes for the specified parameters.
+        ///     The historical quotes for the specified parameters.
         /// </returns>
         public async Task<HistoricalQuotes> GetHistoricalQuotes(string symbol, string interval, string start,
             string end, string sessionFilter = null, CultureInfo culture = null)
@@ -127,7 +128,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Get historical pricing for a security
+        ///     Get historical pricing for a security
         /// </summary>
         /// <param name="symbol">The symbol of the security</param>
         /// <param name="interval">The interval of pricing data (daily, weekly, monthly)</param>
@@ -144,10 +145,7 @@ namespace Tradier.Client
             var requestUrl = $"markets/history?symbol={symbol}&interval={interval}&start={stringStart}&end={stringEnd}";
 
             // Add session filter parameter if provided
-            if (!string.IsNullOrEmpty(sessionFilter))
-            {
-                requestUrl += $"&session_filter={sessionFilter}";
-            }
+            if (!string.IsNullOrEmpty(sessionFilter)) requestUrl += $"&session_filter={sessionFilter}";
 
             var response = await _requests.GetRequest(requestUrl);
             return JsonSerializer.Deserialize<HistoricalQuotesRootobject>(response).History;
