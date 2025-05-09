@@ -96,7 +96,7 @@ namespace Tradier.Client
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
 
-            return GetOrderReponseOrOrderPreviewResponse(response, preview);
+            return GetOrderResponseOrOrderPreviewResponse(response, preview);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Tradier.Client
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
 
-            return GetOrderReponseOrOrderPreviewResponse(response, preview);
+            return GetOrderResponseOrOrderPreviewResponse(response, preview);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Tradier.Client
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
 
-            return GetOrderReponseOrOrderPreviewResponse(response, preview);
+            return GetOrderResponseOrOrderPreviewResponse(response, preview);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Tradier.Client
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
 
-            return GetOrderReponseOrOrderPreviewResponse(response, preview);
+            return GetOrderResponseOrOrderPreviewResponse(response, preview);
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace Tradier.Client
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
 
-            return GetOrderReponseOrOrderPreviewResponse(response, preview);
+            return GetOrderResponseOrOrderPreviewResponse(response, preview);
         }
 
         /// <summary>
@@ -441,7 +441,7 @@ namespace Tradier.Client
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
 
-            return GetOrderReponseOrOrderPreviewResponse(response, preview);
+            return GetOrderResponseOrOrderPreviewResponse(response, preview);
         }
 
         /// <summary>
@@ -508,7 +508,7 @@ namespace Tradier.Client
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
 
-            return GetOrderReponseOrOrderPreviewResponse(response, preview);
+            return GetOrderResponseOrOrderPreviewResponse(response, preview);
         }
 
         /// <summary>
@@ -519,8 +519,8 @@ namespace Tradier.Client
         /// <param name="duration">The new order duration. (Optional)</param>
         /// <param name="price">The new order price. (Optional)</param>
         /// <param name="stop">The new order stop value. (Optional)</param>
-        /// <returns>Returns an <see cref="OrderReponse"/> representing the modified order.</returns>
-        public async Task<OrderReponse> ModifyOrder(int orderId, string type = null, string duration = null,
+        /// <returns>Returns an <see cref="OrderResponse"/> representing the modified order.</returns>
+        public async Task<OrderResponse> ModifyOrder(int orderId, string type = null, string duration = null,
             double? price = null, double? stop = null)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
@@ -539,7 +539,7 @@ namespace Tradier.Client
         /// <param name="price">The updated price for the order. This parameter is optional.</param>
         /// <param name="stop">The updated stop price for the order. This parameter is optional.</param>
         /// <returns>The response containing details of the modified order.</returns>
-        public async Task<OrderReponse> ModifyOrder(string accountNumber, int orderId, string type = null,
+        public async Task<OrderResponse> ModifyOrder(string accountNumber, int orderId, string type = null,
             string duration = null, double? price = null, double? stop = null)
         {
             var data = new Dictionary<string, string>
@@ -551,15 +551,15 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PutRequest($"accounts/{accountNumber}/orders/{orderId}", data);
-            return JsonSerializer.Deserialize<OrderResponseRootobject>(response).OrderReponse;
+            return JsonSerializer.Deserialize<OrderResponseRootobject>(response).OrderResponse;
         }
 
         /// <summary>
         /// Cancels an order using the default account number.
         /// </summary>
         /// <param name="orderId">The ID of the order to cancel.</param>
-        /// <returns>A task representing the asynchronous operation. The result is an <see cref="OrderReponse"/> object containing the details of the canceled order.</returns>
-        public async Task<OrderReponse> CancelOrder(int orderId)
+        /// <returns>A task representing the asynchronous operation. The result is an <see cref="OrderResponse"/> object containing the details of the canceled order.</returns>
+        public async Task<OrderResponse> CancelOrder(int orderId)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
                 throw new MissingAccountNumberException("The default account number was not defined.");
@@ -572,11 +572,11 @@ namespace Tradier.Client
         /// </summary>
         /// <param name="accountNumber">The account number associated with the order.</param>
         /// <param name="orderId">The unique identifier of the order to be canceled.</param>
-        /// <returns>An <see cref="OrderReponse"/> object representing the result of the cancelation.</returns>
-        public async Task<OrderReponse> CancelOrder(string accountNumber, int orderId)
+        /// <returns>An <see cref="OrderResponse"/> object representing the result of the cancelation.</returns>
+        public async Task<OrderResponse> CancelOrder(string accountNumber, int orderId)
         {
             var response = await _requests.DeleteRequest($"accounts/{accountNumber}/orders/{orderId}");
-            return JsonSerializer.Deserialize<OrderResponseRootobject>(response).OrderReponse;
+            return JsonSerializer.Deserialize<OrderResponseRootobject>(response).OrderResponse;
         }
 
         /// <summary>
@@ -585,11 +585,11 @@ namespace Tradier.Client
         /// <param name="response">The response string to deserialize.</param>
         /// <param name="preview">Indicates whether the response is an order preview.</param>
         /// <returns>The deserialized order response or order preview response.</returns>
-        private IOrder GetOrderReponseOrOrderPreviewResponse(string response, bool preview)
+        private IOrder GetOrderResponseOrOrderPreviewResponse(string response, bool preview)
         {
             if (preview)
                 return JsonSerializer.Deserialize<OrderPreviewResponseRootobject>(response).OrderPreviewResponse;
-            return JsonSerializer.Deserialize<OrderResponseRootobject>(response).OrderReponse;
+            return JsonSerializer.Deserialize<OrderResponseRootobject>(response).OrderResponse;
         }
     }
 }

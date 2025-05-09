@@ -11,13 +11,13 @@ namespace Tradier.Client.Models.Trading
         ///     Represents an order response.
         /// </summary>
         [JsonPropertyName("order")]
-        public OrderReponse OrderReponse { get; set; }
+        public OrderResponse OrderResponse { get; set; }
     }
 
     /// <summary>
     ///     Represents an order response.
     /// </summary>
-    public class OrderReponse : IOrder
+    public class OrderResponse : IOrder
     {
         /// <summary>
         ///     Gets or sets the unique identifier for the property.

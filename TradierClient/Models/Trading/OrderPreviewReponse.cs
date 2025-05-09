@@ -27,7 +27,7 @@ namespace Tradier.Client.Models.Trading
         ///     The commission value.
         /// </value>
         [JsonPropertyName("commission")]
-        public float? Commision { get; set; }
+        public float? Commission { get; set; }
 
         /// <summary>
         ///     Gets or sets the cost of the property.
